@@ -6,6 +6,11 @@ php:
   - nightly
   - hhvm
 
+matrix:
+  fast_finish: true
+  allow_failures:
+    - php: nightly
+
 install: composer update --prefer-dist --no-interaction
 
 script: ./vendor/bin/phpunit -c phpunit.xml.dist
