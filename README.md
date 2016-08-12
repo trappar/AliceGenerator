@@ -1,4 +1,4 @@
-AliceGenerator
+AliceGenerator [![Build Status](https://travis-ci.org/trappar/AliceGenerator.svg?branch=master)](https://travis-ci.org/trappar/AliceGenerator)
 ===========
 
 Recursively convert existing objects into [Alice](https://github.com/nelmio/alice) Fixtures.
