@@ -11,6 +11,7 @@ use Trappar\AliceGenerator\ReferenceNamer\NamespaceNamer;
 use Trappar\AliceGenerator\Tests\Entity\Post;
 use Trappar\AliceGenerator\Tests\Entity\User;
 use Trappar\AliceGenerator\Tests\Util\FixtureUtils;
+use Trappar\AliceGenerator\YamlWriter;
 
 class FixtureGeneratorTest extends TestCase
 {
@@ -56,6 +57,22 @@ class FixtureGeneratorTest extends TestCase
 
         $this->assertSame(
             sprintf("%s:\n    Post-1:\n        title: test\n", Post::class),
+            $yaml
+        );
+    }
+
+    public function testGenerateYamlCustomSpacing()
+    {
+        $post = new Post();
+        $post->title = 'test';
+
+        $fgBuilder = FixtureUtils::buildFixtureGeneratorBuilder([]);
+        $fgBuilder->setYamlWriter(new YamlWriter(1, 1));
+        $fg = $fgBuilder->build();
+        $yaml = $fg->generateYaml($post);
+
+        $this->assertSame(
+            sprintf("%s: { Post-1: { title: test } }\n", Post::class),
             $yaml
         );
     }

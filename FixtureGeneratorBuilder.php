@@ -7,7 +7,6 @@ use Doctrine\Common\Annotations\Reader;
 use Metadata\MetadataFactory;
 use Trappar\AliceGenerator\Builder\DefaultMetadataDriverFactory;
 use Trappar\AliceGenerator\Builder\MetadataDriverFactoryInterface;
-use Trappar\AliceGenerator\Exception\FixtureGeneratorBuilderValidationException;
 use Trappar\AliceGenerator\Metadata\Resolver\Faker\ArrayFakerResolver;
 use Trappar\AliceGenerator\Metadata\Resolver\Faker\ClassFakerResolver;
 use Trappar\AliceGenerator\Metadata\Resolver\Faker\NoArgFakerResolver;
@@ -51,6 +50,10 @@ class FixtureGeneratorBuilder
      * @var bool
      */
     private $handlersConfigured = false;
+    /**
+     * @var YamlWriterInterface
+     */
+    private $yamlWriter;
 
     public function __construct()
     {
@@ -67,6 +70,7 @@ class FixtureGeneratorBuilder
                 ])
             )
             ->setHandlerRegistry(new ObjectHandlerRegistry())
+            ->setYamlWriter(new YamlWriter(3, 4));
     }
 
     /**
@@ -145,13 +149,9 @@ class FixtureGeneratorBuilder
         ]);
     }
 
-    public function validate()
+    public function setYamlWriter(YamlWriterInterface $yamlWriter)
     {
-        if (!$this->persister instanceof PersisterInterface) {
-            throw new FixtureGeneratorBuilderValidationException(
-                'Requires a valid Persister to build.'
-            );
-        }
+        $this->yamlWriter = $yamlWriter;
     }
 
     /**
@@ -159,8 +159,6 @@ class FixtureGeneratorBuilder
      */
     public function build()
     {
-        $this->validate();
-
         $metadataFactory = new MetadataFactory(
             $this->metadataDriverFactory->createDriver($this->metadataDirs, $this->annotationReader)
         );
@@ -173,7 +171,8 @@ class FixtureGeneratorBuilder
             $metadataFactory,
             $this->persister,
             $this->metadataResolver,
-            $this->handlerRegistry
+            $this->handlerRegistry,
+            $this->yamlWriter
         );
     }
 }
