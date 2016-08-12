@@ -7,7 +7,7 @@ use Trappar\AliceGenerator\DataStorage\PersistedObjectCache;
 use Trappar\AliceGenerator\DataStorage\ValueContext;
 use Trappar\AliceGenerator\Exception\UnknownObjectTypeException;
 use Trappar\AliceGenerator\Metadata\Resolver\MetadataResolverInterface;
-use Trappar\AliceGenerator\ObjectHandler\HandlerRegistryInterface;
+use Trappar\AliceGenerator\ObjectHandlerRegistryInterface;
 use Trappar\AliceGenerator\Persister\PersisterInterface;
 
 class ValueVisitor
@@ -29,7 +29,7 @@ class ValueVisitor
      */
     private $propertyValueResolver;
     /**
-     * @var HandlerRegistryInterface
+     * @var ObjectHandlerRegistryInterface
      */
     private $handlerRegistry;
 
@@ -50,7 +50,7 @@ class ValueVisitor
         MetadataFactoryInterface $metadataFactory,
         PersisterInterface $persister,
         MetadataResolverInterface $propertyValueResolver,
-        HandlerRegistryInterface $handlerRegistry
+        ObjectHandlerRegistryInterface $handlerRegistry
     )
     {
         $this->metadataFactory       = $metadataFactory;

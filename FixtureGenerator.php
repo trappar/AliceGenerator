@@ -5,8 +5,7 @@ namespace Trappar\AliceGenerator;
 use Metadata\MetadataFactoryInterface;
 use Symfony\Component\Yaml\Yaml;
 use Trappar\AliceGenerator\Metadata\Resolver\MetadataResolverInterface;
-use Trappar\AliceGenerator\ObjectHandler\HandlerRegistry;
-use Trappar\AliceGenerator\ObjectHandler\HandlerRegistryInterface;
+use Trappar\AliceGenerator\ObjectHandlerRegistryInterface;
 use Trappar\AliceGenerator\Persister\PersisterInterface;
 
 class FixtureGenerator
@@ -25,7 +24,7 @@ class FixtureGenerator
      */
     private $propertyValueResolver;
     /**
-     * @var HandlerRegistryInterface
+     * @var ObjectHandlerRegistryInterface
      */
     private $handlerRegistry;
 
@@ -33,7 +32,7 @@ class FixtureGenerator
         MetadataFactoryInterface $metadataFactory,
         PersisterInterface $persister,
         MetadataResolverInterface $propertyValueResolver,
-        HandlerRegistry $handlerRegistry
+        ObjectHandlerRegistryInterface $handlerRegistry,
     )
     {
         $this->metadataFactory       = $metadataFactory;

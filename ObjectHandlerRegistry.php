@@ -1,10 +1,11 @@
 <?php
 
-namespace Trappar\AliceGenerator\ObjectHandler;
+namespace Trappar\AliceGenerator;
 
 use Trappar\AliceGenerator\DataStorage\ValueContext;
+use Trappar\AliceGenerator\ObjectHandler\ObjectHandlerInterface;
 
-class HandlerRegistry implements HandlerRegistryInterface
+class ObjectHandlerRegistry implements ObjectHandlerRegistryInterface
 {
     /**
      * @var ObjectHandlerInterface[]

@@ -16,8 +16,8 @@ use Trappar\AliceGenerator\Metadata\Resolver\MetadataResolver;
 use Trappar\AliceGenerator\Metadata\Resolver\MetadataResolverInterface;
 use Trappar\AliceGenerator\ObjectHandler\CollectionHandler;
 use Trappar\AliceGenerator\ObjectHandler\DateTimeHandler;
-use Trappar\AliceGenerator\ObjectHandler\HandlerRegistry;
-use Trappar\AliceGenerator\ObjectHandler\HandlerRegistryInterface;
+use Trappar\AliceGenerator\ObjectObjectHandlerRegistry;
+use Trappar\AliceGenerator\ObjectHandlerRegistryInterface;
 use Trappar\AliceGenerator\Persister\PersisterInterface;
 
 class FixtureGeneratorBuilder
@@ -43,7 +43,7 @@ class FixtureGeneratorBuilder
      */
     private $metadataResolver;
     /**
-     * @var HandlerRegistryInterface
+     * @var ObjectHandlerRegistryInterface
      */
     private $handlerRegistry;
     /**
@@ -64,7 +64,7 @@ class FixtureGeneratorBuilder
                     new NoArgFakerResolver()
                 ])
             )
-            ->setHandlerRegistry(new HandlerRegistry());
+            ->setHandlerRegistry(new ObjectHandlerRegistry())
     }
 
     /**
@@ -123,10 +123,10 @@ class FixtureGeneratorBuilder
     }
 
     /**
-     * @param HandlerRegistryInterface $handlerRegistry
+     * @param ObjectHandlerRegistryInterface $handlerRegistry
      * @return FixtureGeneratorBuilder
      */
-    public function setHandlerRegistry(HandlerRegistryInterface $handlerRegistry)
+    public function setHandlerRegistry(ObjectHandlerRegistryInterface $handlerRegistry)
     {
         $this->handlerRegistry = $handlerRegistry;
 
