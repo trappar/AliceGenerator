@@ -5,6 +5,7 @@ namespace Trappar\AliceGenerator;
 use Metadata\MetadataFactoryInterface;
 use Trappar\AliceGenerator\DataStorage\PersistedObjectCache;
 use Trappar\AliceGenerator\DataStorage\ValueContext;
+use Trappar\AliceGenerator\Exception\UnknownObjectTypeException;
 use Trappar\AliceGenerator\Metadata\Resolver\MetadataResolverInterface;
 use Trappar\AliceGenerator\ObjectHandler\HandlerRegistryInterface;
 use Trappar\AliceGenerator\Persister\PersisterInterface;
@@ -143,6 +144,15 @@ class ValueVisitor
             }
 
             $valueContext->setSkipped(true);
+        }
+
+        if (!$valueContext->isSkipped() && !$valueContext->isModified()) {
+            throw new UnknownObjectTypeException(sprintf(
+                'Object of unknown type "%s" encountered during generation. Unknown types can\'t be serialized ' .
+                'directly. You can create an ObjectHandler for this type, or supply metadata on the property for' .
+                'how this should be handled.',
+                get_class($valueContext->getValue())
+            ));
         }
     }
 

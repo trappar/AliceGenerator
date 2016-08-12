@@ -4,6 +4,7 @@ namespace Trappar\AliceGenerator\Tests;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
+use Trappar\AliceGenerator\Exception\UnknownObjectTypeException;
 use Trappar\AliceGenerator\FixtureGenerationContext;
 use Trappar\AliceGenerator\Persister\NonSpecificPersister;
 use Trappar\AliceGenerator\ReferenceNamer\NamespaceNamer;
@@ -34,6 +35,15 @@ class FixtureGeneratorTest extends TestCase
         $processedUser->name  = null;
 
         $this->assertEquals($user, $processedUser);
+    }
+
+    public function testWithUnknownObjectType()
+    {
+        $user = new User();
+        $user->username = new \Exception();
+
+        $this->expectException(UnknownObjectTypeException::class);
+        FixtureUtils::getFixturesFromObjects($user);
     }
 
     public function testGenerateYaml()
