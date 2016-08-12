@@ -1,0 +1,10 @@
+Trappar\AliceGenerator\Tests\Metadata\Entity\Foo:
+    staticData:
+        data: test
+    faker:
+        faker:
+            name: test
+            type: array
+            arguments: [test]
+    ignored:
+        ignore: true
