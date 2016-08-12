@@ -11,6 +11,7 @@
         }
     ],
     "require": {
+        "php": "^5.6||^7.0",
         "symfony/yaml": "^3.1",
         "doctrine/common": "^2.6",
         "jms/metadata": "^1.5"
