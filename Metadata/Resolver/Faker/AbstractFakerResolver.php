@@ -8,7 +8,7 @@ use Trappar\AliceGenerator\Metadata\Resolver\AbstractMetadataResolver;
 
 abstract class AbstractFakerResolver extends AbstractMetadataResolver implements FakerResolverInterface
 {
-    public function resolve(ValueContext $valueContext)
+    final public function resolve(ValueContext $valueContext)
     {
         $this->validate($valueContext);
 
