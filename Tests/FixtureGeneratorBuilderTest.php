@@ -13,13 +13,4 @@ class FixtureGeneratorBuilderTest extends TestCase
     {
         $this->assertInstanceOf('Trappar\AliceGenerator\FixtureGenerator', FixtureUtils::buildFixtureGenerator());
     }
-
-    public function testInvalidBuilderNoPersister()
-    {
-        $this->expectException(FixtureGeneratorBuilderValidationException::class);
-        $this->expectExceptionMessageRegExp('/Persister/');
-
-        $builder = new FixtureGeneratorBuilder();
-        $builder->build();
-    }
 }

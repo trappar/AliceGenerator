@@ -18,6 +18,7 @@ use Trappar\AliceGenerator\ObjectHandler\CollectionHandler;
 use Trappar\AliceGenerator\ObjectHandler\DateTimeHandler;
 use Trappar\AliceGenerator\ObjectObjectHandlerRegistry;
 use Trappar\AliceGenerator\ObjectHandlerRegistryInterface;
+use Trappar\AliceGenerator\Persister\NonSpecificPersister;
 use Trappar\AliceGenerator\Persister\PersisterInterface;
 
 class FixtureGeneratorBuilder
@@ -55,6 +56,7 @@ class FixtureGeneratorBuilder
     {
         $this
             ->setMetadataDriverFactory(new DefaultMetadataDriverFactory())
+            ->setPersister(new NonSpecificPersister())
             ->setAnnotationReader(new AnnotationReader())
             ->setMetadataResolver(
                 new MetadataResolver([
