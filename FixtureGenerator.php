@@ -21,7 +21,7 @@ class FixtureGenerator
     /**
      * @var MetadataResolverInterface
      */
-    private $propertyValueResolver;
+    private $metadataResolver;
     /**
      * @var ObjectHandlerRegistryInterface
      */
@@ -34,18 +34,18 @@ class FixtureGenerator
     public function __construct(
         MetadataFactoryInterface $metadataFactory,
         PersisterInterface $persister,
-        MetadataResolverInterface $propertyValueResolver,
+        MetadataResolverInterface $metadataResolver,
         ObjectHandlerRegistryInterface $handlerRegistry,
         YamlWriterInterface $yamlWriter
     )
     {
-        $this->metadataFactory       = $metadataFactory;
-        $this->persister             = $persister;
-        $this->propertyValueResolver = $propertyValueResolver;
-        $this->handlerRegistry       = $handlerRegistry;
-        $this->yamlWriter = $yamlWriter;
+        $this->metadataFactory  = $metadataFactory;
+        $this->persister        = $persister;
+        $this->metadataResolver = $metadataResolver;
+        $this->handlerRegistry  = $handlerRegistry;
+        $this->yamlWriter       = $yamlWriter;
 
-        $this->valueVisitor = new ValueVisitor($this->metadataFactory, $this->persister, $this->propertyValueResolver, $this->handlerRegistry);
+        $this->valueVisitor = new ValueVisitor($this->metadataFactory, $this->persister, $this->metadataResolver, $this->handlerRegistry);
     }
 
     public function generateArray($value, $fixtureGenerationContext = null)

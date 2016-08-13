@@ -7,7 +7,6 @@ use Trappar\AliceGenerator\DataStorage\PersistedObjectCache;
 use Trappar\AliceGenerator\DataStorage\ValueContext;
 use Trappar\AliceGenerator\Exception\UnknownObjectTypeException;
 use Trappar\AliceGenerator\Metadata\Resolver\MetadataResolverInterface;
-use Trappar\AliceGenerator\ObjectHandlerRegistryInterface;
 use Trappar\AliceGenerator\Persister\PersisterInterface;
 
 class ValueVisitor
@@ -27,7 +26,7 @@ class ValueVisitor
     /**
      * @var MetadataResolverInterface
      */
-    private $propertyValueResolver;
+    private $metadataResolver;
     /**
      * @var ObjectHandlerRegistryInterface
      */
@@ -49,14 +48,14 @@ class ValueVisitor
     public function __construct(
         MetadataFactoryInterface $metadataFactory,
         PersisterInterface $persister,
-        MetadataResolverInterface $propertyValueResolver,
+        MetadataResolverInterface $metadataResolver,
         ObjectHandlerRegistryInterface $handlerRegistry
     )
     {
-        $this->metadataFactory       = $metadataFactory;
-        $this->persister             = $persister;
-        $this->propertyValueResolver = $propertyValueResolver;
-        $this->handlerRegistry       = $handlerRegistry;
+        $this->metadataFactory  = $metadataFactory;
+        $this->persister        = $persister;
+        $this->metadataResolver = $metadataResolver;
+        $this->handlerRegistry  = $handlerRegistry;
     }
 
     public function setup(FixtureGenerationContext $fixtureGenerationContext)
@@ -214,7 +213,7 @@ class ValueVisitor
                 continue;
             }
 
-            $this->propertyValueResolver->resolve($valueContext);
+            $this->metadataResolver->resolve($valueContext);
 
             if (!$valueContext->isModified()) {
                 $value = $valueContext->getValue();
