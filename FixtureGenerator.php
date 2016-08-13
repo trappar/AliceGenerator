@@ -4,7 +4,6 @@ namespace Trappar\AliceGenerator;
 
 use Metadata\MetadataFactoryInterface;
 use Trappar\AliceGenerator\Metadata\Resolver\MetadataResolverInterface;
-use Trappar\AliceGenerator\ObjectHandlerRegistryInterface;
 use Trappar\AliceGenerator\Persister\PersisterInterface;
 
 class FixtureGenerator

@@ -15,8 +15,6 @@ use Trappar\AliceGenerator\Metadata\Resolver\MetadataResolver;
 use Trappar\AliceGenerator\Metadata\Resolver\MetadataResolverInterface;
 use Trappar\AliceGenerator\ObjectHandler\CollectionHandler;
 use Trappar\AliceGenerator\ObjectHandler\DateTimeHandler;
-use Trappar\AliceGenerator\ObjectObjectHandlerRegistry;
-use Trappar\AliceGenerator\ObjectHandlerRegistryInterface;
 use Trappar\AliceGenerator\Persister\NonSpecificPersister;
 use Trappar\AliceGenerator\Persister\PersisterInterface;
 
