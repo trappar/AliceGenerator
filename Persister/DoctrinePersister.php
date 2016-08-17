@@ -3,20 +3,20 @@
 namespace Trappar\AliceGenerator\Persister;
 
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
+use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Util\ClassUtils;
-use Doctrine\ORM\EntityManager;
 use Trappar\AliceGenerator\DataStorage\ValueContext;
 
 class DoctrinePersister extends AbstractPersister
 {
     /**
-     * @var EntityManager
+     * @var ObjectManager
      */
-    private $em;
+    private $om;
 
-    public function __construct(EntityManager $em)
+    public function __construct(ObjectManager $om)
     {
-        $this->em = $em;
+        $this->om = $om;
     }
 
     public function getClass($object)
@@ -52,7 +52,7 @@ class DoctrinePersister extends AbstractPersister
     private function getMetadata($object)
     {
         try {
-            return $this->em->getMetadataFactory()->getMetadataFor($this->getClass($object));
+            return $this->om->getMetadataFactory()->getMetadataFor($this->getClass($object));
         } catch (\Exception $e) {
             return false;
         }

@@ -28,5 +28,4 @@ class NonSpecificPersister extends AbstractPersister
     {
         return false;
     }
-
 }
