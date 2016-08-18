@@ -7,7 +7,6 @@ use Trappar\AliceGenerator\DataStorage\ValueContext;
 use Trappar\AliceGenerator\Exception\FakerResolverException;
 use Trappar\AliceGenerator\Metadata\PropertyMetadata;
 use Trappar\AliceGenerator\Metadata\Resolver\Faker\ClassFakerResolver;
-use Trappar\AliceGenerator\Metadata\Resolver\MetadataResolver;
 use Trappar\AliceGenerator\Tests\Entity\User;
 
 class ClassFakerResolverTest extends TestCase
@@ -22,9 +21,26 @@ class ClassFakerResolverTest extends TestCase
         $this->resolver = new ClassFakerResolver();
     }
 
-    public function testResolve()
+    /**
+     * @dataProvider getTestCases
+     * @param string $expected
+     * @param array $fakerArgs
+     */
+    public function testResolve($expected, array $fakerArgs)
     {
-        $this->assertSame('test', $this->runResolve([self::class]));
+        $this->assertSame($expected, $this->runResolve($fakerArgs));
+    }
+
+    public function getTestCases()
+    {
+        return [
+            ['test', [self::class]],
+            ['test', [self::class.'::toFixture']],
+            ['test', [self::class, 'toFixture']],
+            ['test', ['self']],
+            ['test', ['self::toFixture']],
+            ['test', ['self', 'toFixture']],
+        ];
     }
 
     public function testInvalidClass()
@@ -43,6 +59,7 @@ class ClassFakerResolverTest extends TestCase
 
         $context = new ValueContext();
         $context->setMetadata($metadata);
+        $context->setContextObject($this);
 
         $this->resolver->resolve($context);
 

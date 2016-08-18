@@ -2,8 +2,8 @@
 
 namespace Trappar\AliceGenerator\Metadata\Resolver\Faker;
 
-use Trappar\AliceGenerator\Exception\FakerResolverException;
 use Trappar\AliceGenerator\DataStorage\ValueContext;
+use Trappar\AliceGenerator\Exception\FakerResolverException;
 
 class ClassFakerResolver extends AbstractFakerResolver
 {
@@ -39,9 +39,19 @@ class ClassFakerResolver extends AbstractFakerResolver
 
     private function getTarget(ValueContext $valueContext)
     {
-        $args   = $valueContext->getMetadata()->fakerResolverArgs;
+        $args = $valueContext->getMetadata()->fakerResolverArgs;
+
         $target = isset($args[0]) ? $args[0] : null;
-        $method = isset($args[1]) ? $args[1] : 'toFixture';
+
+        if (count($parts = explode('::', $target)) == 2) {
+            list($target, $method) = $parts;
+        } else {
+            $method = isset($args[1]) ? $args[1] : 'toFixture';
+        }
+
+        if ($target == 'self') {
+            $target = get_class($valueContext->getContextObject());
+        }
 
         return [$target, $method];
     }
