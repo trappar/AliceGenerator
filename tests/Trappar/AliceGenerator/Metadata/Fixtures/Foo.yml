@@ -1,4 +1,4 @@
-Trappar\AliceGenerator\Tests\Metadata\Entity\Foo:
+Trappar\AliceGenerator\Tests\Metadata\Fixtures\Foo:
     staticData:
         data: test
     faker:

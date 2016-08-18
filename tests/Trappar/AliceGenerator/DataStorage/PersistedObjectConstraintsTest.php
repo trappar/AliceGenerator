@@ -5,7 +5,7 @@ namespace Trappar\AliceGeneratorBundle\Tests\DataStorage;
 use PHPUnit\Framework\TestCase;
 use Trappar\AliceGenerator\DataStorage\PersistedObjectConstraints;
 use Trappar\AliceGenerator\Persister\NonSpecificPersister;
-use Trappar\AliceGenerator\Tests\Entity\User;
+use Trappar\AliceGenerator\Tests\Fixtures\User;
 
 class PersistedObjectConstraintsTest extends TestCase
 {

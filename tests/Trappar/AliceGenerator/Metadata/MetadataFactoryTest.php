@@ -9,8 +9,8 @@ use PHPUnit\Framework\TestCase;
 use Trappar\AliceGenerator\Builder\DefaultMetadataDriverFactory;
 use Trappar\AliceGenerator\Exception\RuntimeException;
 use Trappar\AliceGenerator\Metadata\PropertyMetadata;
-use Trappar\AliceGenerator\Tests\Metadata\Entity\Bar;
-use Trappar\AliceGenerator\Tests\Metadata\Entity\Foo;
+use Trappar\AliceGenerator\Tests\Metadata\Fixtures\Bar;
+use Trappar\AliceGenerator\Tests\Metadata\Fixtures\Foo;
 
 class MetadataFactoryTest extends TestCase
 {
@@ -27,7 +27,7 @@ class MetadataFactoryTest extends TestCase
     public function testLoadingYaml()
     {
         $metadataFactory = new MetadataFactory($this->driverFactory->createDriver(
-            ['Trappar\AliceGenerator\Tests\Metadata\Entity' => __DIR__ . '/Entity'],
+            ['Trappar\AliceGenerator\Tests\Metadata\Fixtures' => __DIR__ . '/Fixtures'],
             new AnnotationReader()
         ));
 
@@ -45,7 +45,7 @@ class MetadataFactoryTest extends TestCase
         $this->expectExceptionMessageRegExp('/expected metadata/i');
 
         $metadataFactory = new MetadataFactory($this->driverFactory->createDriver(
-            ['Trappar\AliceGenerator\Tests\Metadata\Entity' => __DIR__ . '/Entity'],
+            ['Trappar\AliceGenerator\Tests\Metadata\Fixtures' => __DIR__ . '/Fixtures'],
             new AnnotationReader()
         ));
 

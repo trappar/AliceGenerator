@@ -7,8 +7,7 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use PHPUnit\Framework\TestCase;
 use Trappar\AliceGenerator\DataStorage\ValueContext;
 use Trappar\AliceGenerator\Persister\DoctrinePersister;
-use Trappar\AliceGenerator\Tests\Entity\Post;
-use Trappar\AliceGenerator\Tests\Entity\User;
+use Trappar\AliceGenerator\Tests\Fixtures\User;
 use Trappar\AliceGenerator\Tests\Util\FixtureUtils;
 
 class DoctrinePersisterTest extends TestCase
@@ -62,27 +61,5 @@ class DoctrinePersisterTest extends TestCase
 
         $this->assertTrue($this->persister->isPropertyNoOp($mock));
         $this->assertFalse($this->persister->isPropertyNoOp($mock));
-    }
-
-    public function test()
-    {
-
-//        $em = FixtureUtils::buildEntityManager(__DIR__ . '/../Entity');
-//
-
-//        $mock->username = 'test';
-//
-//        $doctrinePersister = $this->createMock(DoctrinePersister::class);
-////        $doctrinePersister->method('getMetadata')->willReturn($em->getClassMetadata(User::class));
-//        $doctrinePersister->method('isObjectManagedByPersister')->willReturn(true);
-//
-//        $fgBuilder = FixtureUtils::buildFixtureGeneratorBuilder([]);
-//        $fgBuilder->setPersister($doctrinePersister);
-//
-//        $fg = $fgBuilder->build();
-//
-//        $results = $fg->generateArray($mock);
-//
-//        xdebug_break();
     }
 }

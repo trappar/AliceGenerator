@@ -8,7 +8,7 @@ use Trappar\AliceGenerator\Exception\FakerResolverException;
 use Trappar\AliceGenerator\Metadata\PropertyMetadata;
 use Trappar\AliceGenerator\Metadata\Resolver\Faker\ClassFakerResolver;
 use Trappar\AliceGenerator\Metadata\Resolver\MetadataResolver;
-use Trappar\AliceGenerator\Tests\Entity\User;
+use Trappar\AliceGenerator\Tests\Fixtures\User;
 
 class MetadataResolverTest extends TestCase
 {

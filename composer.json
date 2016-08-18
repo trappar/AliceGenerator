@@ -22,9 +22,6 @@
         "nelmio/alice": "^2.2"
     },
     "autoload": {
-        "psr-4": { "Trappar\\AliceGenerator\\": "" },
-        "exclude-from-classmap": [
-            "/Tests/"
-        ]
+        "psr-4": { "Trappar\\AliceGenerator\\": "src/Trappar/AliceGenerator" }
     }
 }

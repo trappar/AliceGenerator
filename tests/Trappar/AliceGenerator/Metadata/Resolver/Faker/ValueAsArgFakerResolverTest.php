@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Trappar\AliceGenerator\DataStorage\ValueContext;
 use Trappar\AliceGenerator\Metadata\PropertyMetadata;
 use Trappar\AliceGenerator\Metadata\Resolver\Faker\ValueAsArgFakerResolver;
-use Trappar\AliceGenerator\Tests\Entity\User;
+use Trappar\AliceGenerator\Tests\Fixtures\User;
 
 class ValueAsArgFakerResolverTest extends TestCase
 {

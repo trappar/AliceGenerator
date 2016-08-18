@@ -6,15 +6,34 @@ use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 use Trappar\AliceGenerator\Exception\UnknownObjectTypeException;
 use Trappar\AliceGenerator\FixtureGenerationContext;
+use Trappar\AliceGenerator\FixtureGeneratorBuilder;
 use Trappar\AliceGenerator\Persister\NonSpecificPersister;
 use Trappar\AliceGenerator\ReferenceNamer\NamespaceNamer;
-use Trappar\AliceGenerator\Tests\Entity\Post;
-use Trappar\AliceGenerator\Tests\Entity\User;
+use Trappar\AliceGenerator\Tests\Fixtures\Post;
+use Trappar\AliceGenerator\Tests\Fixtures\User;
 use Trappar\AliceGenerator\Tests\Util\FixtureUtils;
 use Trappar\AliceGenerator\YamlWriter;
 
 class FixtureGeneratorTest extends TestCase
 {
+    public function testDefaultFixtureGenerator()
+    {
+        $builder = new FixtureGeneratorBuilder();
+        $fg = $builder->build();
+
+        $obj = new TestObject();
+        $obj->foo = 'bar';
+
+        $result = $fg->generateArray($obj);
+        $this->assertSame([
+            TestObject::class => [
+                'TestObject-1' => [
+                    'foo' => 'bar'
+                ]
+            ]
+        ], $result);
+    }
+
     public function testMultipleEntities()
     {
         $user = $this->createTestData();
@@ -112,7 +131,7 @@ class FixtureGeneratorTest extends TestCase
             FixtureGenerationContext::create()->setReferenceNamer(new NamespaceNamer())
         );
 
-        $this->assertArrayHasKey('TrapparAliceGeneratorTestsEntityUser-1', $results[User::class]);
+        $this->assertArrayHasKey('TrapparAliceGeneratorTestsFixturesUser-1', $results[User::class]);
     }
 
     public function testIgnoringEmptyEntity()
@@ -166,4 +185,9 @@ class FixtureGeneratorTest extends TestCase
 
         return $user;
     }
+}
+
+class TestObject
+{
+    public $foo;
 }

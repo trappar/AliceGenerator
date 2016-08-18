@@ -1,6 +1,6 @@
 <?php
 
-namespace Trappar\AliceGenerator\Tests\Entity;
+namespace Trappar\AliceGenerator\Tests\Fixtures;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;

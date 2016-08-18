@@ -4,14 +4,14 @@ namespace Trappar\AliceGenerator\Tests\ReferenceNamer;
 
 use PHPUnit\Framework\TestCase;
 use Trappar\AliceGenerator\ReferenceNamer\NamespaceNamer;
-use Trappar\AliceGenerator\Tests\Entity\User;
+use Trappar\AliceGenerator\Tests\Fixtures\User;
 
 class NamespaceNamerTest extends TestCase
 {
     public function testDefault()
     {
         $this->assertSame(
-            'TrapparAliceGeneratorTestsEntityUser-',
+            'TrapparAliceGeneratorTestsFixturesUser-',
             $this->getNamer()->createPrefix(new User())
         );
     }
@@ -19,7 +19,7 @@ class NamespaceNamerTest extends TestCase
     public function testIgnoredNamespaces()
     {
         $this->assertSame(
-            'TrapparEntityUser-',
+            'TrapparFixturesUser-',
             $this->getNamer()
                 ->setIgnoredNamespaces(['AliceGenerator', 'Tests'])
                 ->createPrefix(new User())
@@ -29,7 +29,7 @@ class NamespaceNamerTest extends TestCase
     public function testNamespaceSeparator()
     {
         $this->assertSame(
-            'Trappar-AliceGenerator-Tests-Entity-User-',
+            'Trappar-AliceGenerator-Tests-Fixtures-User-',
             $this->getNamer()
                 ->setNamespaceSeparator('-')
                 ->createPrefix(new User())

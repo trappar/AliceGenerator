@@ -1,6 +1,6 @@
 <?php
 
-namespace Trappar\AliceGenerator\Tests\Metadata\Entity;
+namespace Trappar\AliceGenerator\Tests\Metadata\Fixtures;
 
 use Trappar\AliceGenerator\Annotation as Fixture;
 
