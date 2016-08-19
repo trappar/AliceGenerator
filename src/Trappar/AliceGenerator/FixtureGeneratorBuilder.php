@@ -7,6 +7,7 @@ use Doctrine\Common\Annotations\Reader;
 use Metadata\MetadataFactory;
 use Trappar\AliceGenerator\Builder\DefaultMetadataDriverFactory;
 use Trappar\AliceGenerator\Builder\MetadataDriverFactoryInterface;
+use Trappar\AliceGenerator\Exception\InvalidArgumentException;
 use Trappar\AliceGenerator\Metadata\Resolver\Faker\ArrayFakerResolver;
 use Trappar\AliceGenerator\Metadata\Resolver\Faker\ClassFakerResolver;
 use Trappar\AliceGenerator\Metadata\Resolver\Faker\NoArgFakerResolver;
@@ -53,6 +54,11 @@ class FixtureGeneratorBuilder
      */
     private $yamlWriter;
 
+    public static function create()
+    {
+        return new static();
+    }
+
     public function __construct()
     {
         $this
@@ -72,13 +78,36 @@ class FixtureGeneratorBuilder
     }
 
     /**
-     * @param array $metadataDirs
-     * @return FixtureGeneratorBuilder
+     * Adds a directory where the FixtureGenerator will look for class metadata.
+     *
+     * See: doc/configuration.md
+     *
+     * @param        $dir
+     * @param string $namespacePrefix
+     * @return $this
      */
-    public function setMetadataDirs(array $metadataDirs)
+    public function addMetadataDir($dir, $namespacePrefix = '')
     {
-        $this->metadataDirs = $metadataDirs;
+        if (!is_dir($dir)) {
+            throw new InvalidArgumentException(sprintf('The directory "%s" does not exist.', $dir));
+        }
 
+        $this->metadataDirs[$namespacePrefix] = $dir;
+
+        return $this;
+    }
+
+    /**
+     * Adds a map of namespace prefixes to directories.
+     *
+     * @param array<string, string> $namespacePrefixToDirMap
+     * @return $this
+     */
+    public function addMetadataDirs(array $namespacePrefixToDirMap)
+    {
+        foreach ($namespacePrefixToDirMap as $prefix => $dir) {
+            $this->addMetadataDir($dir, $prefix);
+        }
         return $this;
     }
 
@@ -126,6 +155,13 @@ class FixtureGeneratorBuilder
         return $this;
     }
 
+    public function configureMetadataResolver(\Closure $closure)
+    {
+        $closure($this->metadataResolver);
+
+        return $this;
+    }
+
     /**
      * @param ObjectHandlerRegistryInterface $objectHandlerRegistry
      * @return FixtureGeneratorBuilder
@@ -144,6 +180,14 @@ class FixtureGeneratorBuilder
             new CollectionHandler(),
             new DateTimeHandler(),
         ]);
+
+        return $this;
+    }
+
+    public function configureObjectHandlerRegistry(\Closure $closure)
+    {
+        $this->objectHandlersConfigured = true;
+        $closure($this->objectHandlerRegistry);
 
         return $this;
     }

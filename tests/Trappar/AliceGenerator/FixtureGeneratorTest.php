@@ -18,8 +18,7 @@ class FixtureGeneratorTest extends TestCase
 {
     public function testDefaultFixtureGenerator()
     {
-        $builder = new FixtureGeneratorBuilder();
-        $fg = $builder->build();
+        $fg = FixtureGeneratorBuilder::create()->build();
 
         $obj = new TestObject();
         $obj->foo = 'bar';

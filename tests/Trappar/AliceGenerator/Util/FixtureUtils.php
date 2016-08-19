@@ -20,12 +20,12 @@ class FixtureUtils
      */
     public static function buildFixtureGeneratorBuilder($setMetadataDirs)
     {
-        $entitiesPaths = ['Trappar\AliceGenerator\Tests\Entities' => __DIR__ . '/../Entities'];
+        $entitiesPaths = ['Trappar\AliceGenerator\Tests\Fixtures' => __DIR__ . '/../Fixtures'];
         $em = self::buildEntityManager($entitiesPaths);
 
         $fgBuilder = new FixtureGeneratorBuilder();
         if ($setMetadataDirs) {
-            $fgBuilder->setMetadataDirs($entitiesPaths);
+            $fgBuilder->addMetadataDirs($entitiesPaths);
         }
         $fgBuilder->setPersister(new DoctrinePersister($em));
 
