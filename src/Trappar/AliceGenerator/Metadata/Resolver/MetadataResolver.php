@@ -15,8 +15,13 @@ class MetadataResolver extends AbstractMetadataResolver
 
     public function __construct(array $resolvers = [])
     {
-        foreach ($resolvers as $resolver) {
-            $this->addFakerResolver($resolver);
+        $this->addFakerResolvers($resolvers);
+    }
+
+    public function addFakerResolvers(array $fakerResolvers)
+    {
+        foreach ($fakerResolvers as $fakerResolver) {
+            $this->addFakerResolver($fakerResolver);
         }
     }
 

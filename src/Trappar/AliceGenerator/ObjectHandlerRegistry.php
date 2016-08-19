@@ -28,6 +28,14 @@ class ObjectHandlerRegistry implements ObjectHandlerRegistryInterface
     }
 
     /**
+     * @param ObjectHandlerInterface $handler
+     */
+    public function registerHandler(ObjectHandlerInterface $handler)
+    {
+        array_unshift($this->handlers, $handler);
+    }
+
+    /**
      * @inheritdoc
      */
     public function runHandlers(ValueContext $valueContext)
@@ -39,13 +47,5 @@ class ObjectHandlerRegistry implements ObjectHandlerRegistryInterface
         }
 
         return false;
-    }
-
-    /**
-     * @param ObjectHandlerInterface $handler
-     */
-    private function registerHandler(ObjectHandlerInterface $handler)
-    {
-        $this->handlers[] = $handler;
     }
 }
