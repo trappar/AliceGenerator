@@ -43,11 +43,11 @@ class FixtureGeneratorBuilder
     /**
      * @var ObjectHandlerRegistryInterface
      */
-    private $handlerRegistry;
+    private $objectHandlerRegistry;
     /**
      * @var bool
      */
-    private $handlersConfigured = false;
+    private $objectHandlersConfigured;
     /**
      * @var YamlWriterInterface
      */
@@ -67,7 +67,7 @@ class FixtureGeneratorBuilder
                     new NoArgFakerResolver()
                 ])
             )
-            ->setHandlerRegistry(new ObjectHandlerRegistry())
+            ->setObjectHandlerRegistry(new ObjectHandlerRegistry())
             ->setYamlWriter(new YamlWriter(3, 4));
     }
 
@@ -127,24 +127,25 @@ class FixtureGeneratorBuilder
     }
 
     /**
-     * @param ObjectHandlerRegistryInterface $handlerRegistry
+     * @param ObjectHandlerRegistryInterface $objectHandlerRegistry
      * @return FixtureGeneratorBuilder
      */
-    public function setHandlerRegistry(ObjectHandlerRegistryInterface $handlerRegistry)
+    public function setObjectHandlerRegistry(ObjectHandlerRegistryInterface $objectHandlerRegistry)
     {
-        $this->handlerRegistry = $handlerRegistry;
+        $this->objectHandlerRegistry    = $objectHandlerRegistry;
 
         return $this;
     }
 
-    public function addDefaultHandlers()
+    public function addDefaultObjectHandlers()
     {
-        $this->handlersConfigured = true;
-
-        $this->handlerRegistry->registerHandlers([
+        $this->objectHandlersConfigured = true;
+        $this->objectHandlerRegistry->registerHandlers([
             new CollectionHandler(),
             new DateTimeHandler(),
         ]);
+
+        return $this;
     }
 
     public function setYamlWriter(YamlWriterInterface $yamlWriter)
@@ -161,15 +162,15 @@ class FixtureGeneratorBuilder
             $this->metadataDriverFactory->createDriver($this->metadataDirs, $this->annotationReader)
         );
 
-        if (!$this->handlersConfigured) {
-            $this->addDefaultHandlers();
+        if (!$this->objectHandlersConfigured) {
+            $this->addDefaultObjectHandlers();
         }
 
         return new FixtureGenerator(
             $metadataFactory,
             $this->persister,
             $this->metadataResolver,
-            $this->handlerRegistry,
+            $this->objectHandlerRegistry,
             $this->yamlWriter
         );
     }

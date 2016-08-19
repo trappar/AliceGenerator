@@ -30,7 +30,7 @@ class ValueVisitor
     /**
      * @var ObjectHandlerRegistryInterface
      */
-    private $handlerRegistry;
+    private $objectHandlerRegistry;
 
     /**
      * @var FixtureGenerationContext
@@ -49,13 +49,13 @@ class ValueVisitor
         MetadataFactoryInterface $metadataFactory,
         PersisterInterface $persister,
         MetadataResolverInterface $metadataResolver,
-        ObjectHandlerRegistryInterface $handlerRegistry
+        ObjectHandlerRegistryInterface $objectHandlerRegistry
     )
     {
-        $this->metadataFactory  = $metadataFactory;
-        $this->persister        = $persister;
-        $this->metadataResolver = $metadataResolver;
-        $this->handlerRegistry  = $handlerRegistry;
+        $this->metadataFactory       = $metadataFactory;
+        $this->persister             = $persister;
+        $this->metadataResolver      = $metadataResolver;
+        $this->objectHandlerRegistry = $objectHandlerRegistry;
     }
 
     public function setup(FixtureGenerationContext $fixtureGenerationContext)
@@ -100,7 +100,7 @@ class ValueVisitor
     {
         $object = $valueContext->getValue();
 
-        $objectHandled = $this->handlerRegistry->runHandlers($valueContext);
+        $objectHandled = $this->objectHandlerRegistry->runHandlers($valueContext);
 
         if (!$objectHandled && $this->persister->isObjectManagedByPersister($object)) {
             if (!$this->fixtureGenerationContext->getPersistedObjectConstraints()->checkValid($object)) {
