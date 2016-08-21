@@ -46,14 +46,18 @@ class YamlDriver extends AbstractFileDriver
             } elseif (isset($pConfig['faker'])) {
                 $fConfig = $pConfig['faker'];
 
-                if (isset($fConfig['name'])) {
-                    $propertyMetadata->fakerName = (string)$fConfig['name'];
-                }
-                if (isset($fConfig['type'])) {
-                    $propertyMetadata->fakerResolverType = (string)$fConfig['type'];
-                }
-                if (isset($fConfig['arguments'])) {
-                    $propertyMetadata->fakerResolverArgs = (array)$fConfig['arguments'];
+                if (is_string($fConfig)) {
+                    $propertyMetadata->fakerName = $fConfig;
+                } elseif (is_array($fConfig)) {
+                    if (isset($fConfig['name'])) {
+                        $propertyMetadata->fakerName = (string)$fConfig['name'];
+                    }
+                    if (isset($fConfig['type'])) {
+                        $propertyMetadata->fakerResolverType = (string)$fConfig['type'];
+                    }
+                    if (isset($fConfig['arguments'])) {
+                        $propertyMetadata->fakerResolverArgs = (array)$fConfig['arguments'];
+                    }
                 }
             } elseif (isset($pConfig['ignore'])) {
                 $propertyMetadata->ignore = (Boolean)$pConfig['ignore'];

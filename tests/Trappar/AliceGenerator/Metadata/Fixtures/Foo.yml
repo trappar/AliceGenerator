@@ -6,5 +6,7 @@ Trappar\AliceGenerator\Tests\Metadata\Fixtures\Foo:
             name: test
             type: array
             arguments: [test]
+    fakerShort:
+        faker: test
     ignored:
         ignore: true

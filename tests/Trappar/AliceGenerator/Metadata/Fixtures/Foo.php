@@ -12,9 +12,14 @@ class Foo
     public $staticData;
 
     /**
-     * @Fixture\Faker(name="test", type="array", arguments={"test"})
+     * @Fixture\Faker("test", type="array", arguments={"test"})
      */
     public $faker;
+
+    /**
+     * @Fixture\Faker("test")
+     */
+    public $fakerShort;
 
     /**
      * @Fixture\Ignore()

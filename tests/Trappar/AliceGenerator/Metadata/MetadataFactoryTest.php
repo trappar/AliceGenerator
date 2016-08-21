@@ -32,9 +32,9 @@ class MetadataFactoryTest extends TestCase
         ));
 
         /** @var MergeableClassMetadata $metadata */
-        $metadata = $metadataFactory->getMetadataForClass(Foo::class);
+        $metadata                = $metadataFactory->getMetadataForClass(Foo::class);
         $metadata->fileResources = [];
-        $metadata->createdAt = null;
+        $metadata->createdAt     = null;
 
         $this->assertEquals($this->getDesiredClassMetadata(), $metadata);
     }
@@ -57,16 +57,16 @@ class MetadataFactoryTest extends TestCase
         $metadataFactory = new MetadataFactory($this->driverFactory->createDriver([], new AnnotationReader()));
 
         /** @var MergeableClassMetadata $metadata */
-        $metadata = $metadataFactory->getMetadataForClass(Foo::class);
+        $metadata                = $metadataFactory->getMetadataForClass(Foo::class);
         $metadata->fileResources = [];
-        $metadata->createdAt = null;
+        $metadata->createdAt     = null;
 
         $this->assertEquals($this->getDesiredClassMetadata(), $metadata);
     }
 
     public function getDesiredClassMetadata()
     {
-        $classMeta                  = new MergeableClassMetadata(Foo::class);
+        $classMeta = new MergeableClassMetadata(Foo::class);
 
         $dataMeta             = new PropertyMetadata(Foo::class, 'staticData');
         $dataMeta->staticData = 'test';
@@ -76,11 +76,15 @@ class MetadataFactoryTest extends TestCase
         $fakerMeta->fakerResolverType = 'array';
         $fakerMeta->fakerResolverArgs = ['test'];
 
+        $fakerShortMeta            = new PropertyMetadata(Foo::class, 'fakerShort');
+        $fakerShortMeta->fakerName = 'test';
+
         $ignoredMeta         = new PropertyMetadata(Foo::class, 'ignored');
         $ignoredMeta->ignore = true;
 
         $classMeta->addPropertyMetadata($dataMeta);
         $classMeta->addPropertyMetadata($fakerMeta);
+        $classMeta->addPropertyMetadata($fakerShortMeta);
         $classMeta->addPropertyMetadata($ignoredMeta);
 
         $classMeta->createdAt = null;
