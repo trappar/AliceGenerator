@@ -3,6 +3,7 @@
 namespace Trappar\AliceGenerator;
 
 use Trappar\AliceGenerator\DataStorage\PersistedObjectConstraints;
+use Trappar\AliceGenerator\Exception\InvalidArgumentException;
 use Trappar\AliceGenerator\Persister\NonSpecificPersister;
 use Trappar\AliceGenerator\ReferenceNamer\ClassNamer;
 use Trappar\AliceGenerator\ReferenceNamer\ReferenceNamerInterface;
@@ -58,12 +59,21 @@ class FixtureGenerationContext
     }
 
     /**
-     * @param $object
+     * @param array|object $objects
      * @return FixtureGenerationContext
      */
-    public function addPersistedObjectConstraint($object)
+    public function addPersistedObjectConstraint($objects)
     {
-        $this->getPersistedObjectConstraints()->add($object);
+        $objects = is_array($objects) ? $objects : [$objects];
+
+        foreach ($objects as $object) {
+            if (!is_object($object)) {
+                throw new InvalidArgumentException(sprintf(
+                    'Non-object passed to addPersistedObjectConstraint() - "%s" given', gettype($object)
+                ));
+            }
+            $this->getPersistedObjectConstraints()->add($object);
+        }
 
         return $this;
     }
