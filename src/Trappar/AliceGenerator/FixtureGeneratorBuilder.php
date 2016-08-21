@@ -9,7 +9,7 @@ use Trappar\AliceGenerator\Builder\DefaultMetadataDriverFactory;
 use Trappar\AliceGenerator\Builder\MetadataDriverFactoryInterface;
 use Trappar\AliceGenerator\Exception\InvalidArgumentException;
 use Trappar\AliceGenerator\Metadata\Resolver\Faker\ArrayFakerResolver;
-use Trappar\AliceGenerator\Metadata\Resolver\Faker\ClassFakerResolver;
+use Trappar\AliceGenerator\Metadata\Resolver\Faker\CallbackFakerResolver;
 use Trappar\AliceGenerator\Metadata\Resolver\Faker\NoArgFakerResolver;
 use Trappar\AliceGenerator\Metadata\Resolver\Faker\ValueAsArgFakerResolver;
 use Trappar\AliceGenerator\Metadata\Resolver\MetadataResolver;
@@ -68,7 +68,7 @@ class FixtureGeneratorBuilder
             ->setMetadataResolver(
                 new MetadataResolver([
                     new ArrayFakerResolver(),
-                    new ClassFakerResolver(),
+                    new CallbackFakerResolver(),
                     new ValueAsArgFakerResolver(),
                     new NoArgFakerResolver()
                 ])

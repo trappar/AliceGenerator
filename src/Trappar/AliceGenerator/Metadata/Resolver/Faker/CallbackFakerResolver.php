@@ -4,15 +4,16 @@ namespace Trappar\AliceGenerator\Metadata\Resolver\Faker;
 
 use Trappar\AliceGenerator\DataStorage\ValueContext;
 use Trappar\AliceGenerator\Exception\FakerResolverException;
+use Trappar\AliceGenerator\Exception\InvalidArgumentException;
 
-class ClassFakerResolver extends AbstractFakerResolver
+class CallbackFakerResolver extends AbstractFakerResolver
 {
     /**
      * @inheritdoc
      */
     public function getType()
     {
-        return 'class';
+        return 'callback';
     }
 
     public function validate(ValueContext $valueContext)
@@ -41,18 +42,16 @@ class ClassFakerResolver extends AbstractFakerResolver
     {
         $args = $valueContext->getMetadata()->fakerResolverArgs;
 
-        $target = isset($args[0]) ? $args[0] : null;
-
-        if (count($parts = explode('::', $target)) == 2) {
-            list($target, $method) = $parts;
-        } else {
-            $method = isset($args[1]) ? $args[1] : 'toFixture';
+        switch ($count = count($args)) {
+            case 1:
+                return [get_class($valueContext->getContextObject()), $args[0]];
+            case 2:
+                return $args;
         }
 
-        if ($target == 'self') {
-            $target = get_class($valueContext->getContextObject());
-        }
-
-        return [$target, $method];
+        throw new InvalidArgumentException(sprintf(
+            'CallbackFakerResolver can accept only one or two arguments, %s given.',
+            $count
+        ));
     }
 }

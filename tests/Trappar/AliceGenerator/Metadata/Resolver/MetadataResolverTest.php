@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use Trappar\AliceGenerator\DataStorage\ValueContext;
 use Trappar\AliceGenerator\Exception\FakerResolverException;
 use Trappar\AliceGenerator\Metadata\PropertyMetadata;
-use Trappar\AliceGenerator\Metadata\Resolver\Faker\ClassFakerResolver;
+use Trappar\AliceGenerator\Metadata\Resolver\Faker\CallbackFakerResolver;
 use Trappar\AliceGenerator\Metadata\Resolver\MetadataResolver;
 use Trappar\AliceGenerator\Tests\Fixtures\User;
 
@@ -26,7 +26,7 @@ class MetadataResolverTest extends TestCase
         $this->expectExceptionMessageRegExp('/no faker resolver.*available types are/i');
 
         $resolver = $this->getResolver();
-        $resolver->addFakerResolver(new ClassFakerResolver());
+        $resolver->addFakerResolver(new CallbackFakerResolver());
 
         $resolver->resolve($this->getValueContext());
     }
