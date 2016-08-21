@@ -1,6 +1,6 @@
 <?php
 
-namespace Trappar\AliceGeneratorBundle\Tests\DataStorage;
+namespace Trappar\AliceGenerator\Tests\DataStorage;
 
 use PHPUnit\Framework\TestCase;
 use Trappar\AliceGenerator\DataStorage\PersistedObjectConstraints;
