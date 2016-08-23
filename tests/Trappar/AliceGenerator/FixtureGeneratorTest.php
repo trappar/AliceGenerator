@@ -40,7 +40,7 @@ class FixtureGeneratorTest extends TestCase
         $fixtures = FixtureUtils::getFixturesFromObjects($user);
         $results  = FixtureUtils::getObjectsFromFixtures($fixtures);
 
-        $this->assertSame('<email>', $fixtures[User::class]['User-1']['email']);
+        $this->assertSame('<email()>', $fixtures[User::class]['User-1']['email']);
         $this->assertSame('<name("male")>', $fixtures[User::class]['User-1']['name']);
 
         /** @var User $processedUser */
