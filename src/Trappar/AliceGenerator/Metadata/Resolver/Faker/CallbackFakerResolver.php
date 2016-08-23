@@ -4,7 +4,6 @@ namespace Trappar\AliceGenerator\Metadata\Resolver\Faker;
 
 use Trappar\AliceGenerator\DataStorage\ValueContext;
 use Trappar\AliceGenerator\Exception\FakerResolverException;
-use Trappar\AliceGenerator\Exception\InvalidArgumentException;
 
 class CallbackFakerResolver extends AbstractFakerResolver
 {
@@ -20,13 +19,26 @@ class CallbackFakerResolver extends AbstractFakerResolver
     {
         $target = $this->getTarget($valueContext);
 
-        if (!is_callable($target)) {
-            list($class, $method) = $target;
-
+        if ($target === false) {
             throw new FakerResolverException($valueContext, sprintf(
-                'supplied method must be callable, "%s::%s" given.',
-                $class, $method
+                'CallbackFakerResolver can only accept one or two arguments.'
             ));
+        } elseif (is_array($target)) {
+            if (!is_callable($target)) {
+                list($class, $method) = $target;
+
+                throw new FakerResolverException($valueContext, sprintf(
+                    'supplied method must be statically callable, "%s::%s" given.',
+                    $class, $method
+                ));
+            }
+        } else {
+            if (!method_exists($contextObject = $valueContext->getContextObject(), $target)) {
+                throw new FakerResolverException($valueContext, sprintf(
+                    'method "%s" must publicly exist in "%s".',
+                    $target, get_class($contextObject)
+                ));
+            }
         }
     }
 
@@ -35,23 +47,23 @@ class CallbackFakerResolver extends AbstractFakerResolver
      */
     public function handle(ValueContext $valueContext)
     {
-        return call_user_func($this->getTarget($valueContext), $valueContext);
+        $target = $this->getTarget($valueContext);
+        if (is_string($target)) {
+            $target = [$valueContext->getContextObject(), $target];
+        }
+
+        return call_user_func($target, $valueContext);
     }
 
     private function getTarget(ValueContext $valueContext)
     {
-        $args = $valueContext->getMetadata()->fakerResolverArgs;
-
-        switch ($count = count($args)) {
+        switch ($count = count($args = $valueContext->getMetadata()->fakerResolverArgs)) {
             case 1:
-                return [get_class($valueContext->getContextObject()), $args[0]];
+                return $args[0];
             case 2:
                 return $args;
+            default:
+                return false;
         }
-
-        throw new InvalidArgumentException(sprintf(
-            'CallbackFakerResolver can accept only one or two arguments, %s given.',
-            $count
-        ));
     }
 }

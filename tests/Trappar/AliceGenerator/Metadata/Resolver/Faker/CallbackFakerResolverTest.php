@@ -12,6 +12,8 @@ use Trappar\AliceGenerator\Tests\Fixtures\User;
 
 class CallbackFakerResolverTest extends TestCase
 {
+    private $testProp = 'testProp';
+
     /**
      * @var CallbackFakerResolver
      */
@@ -35,29 +37,39 @@ class CallbackFakerResolverTest extends TestCase
     public function getTestCases()
     {
         return [
-            ['test', [self::class, 'toFixture']],
-            ['test', ['toFixture']]
+            ['foo', [self::class, 'toFixtureString']],
+            ['foo', ['toFixtureString']],
+            ['testProp', ['toFixtureStringNonStatic']],
+            ['<myFaker("bar")>', ['toFixtureArray']],
+            ['baz', ['toFixtureValueContext']],
         ];
     }
 
     public function testInvalidClass()
     {
         $this->expectException(FakerResolverException::class);
-        $this->expectExceptionMessageRegExp('/must be callable/');
-        $this->runResolve(['invalid_class']);
+        $this->expectExceptionMessageRegExp('/must be statically callable/');
+        $this->runResolve(['invalid_class', 'toFixture']);
+    }
+
+    public function testInvalidMethod()
+    {
+        $this->expectException(FakerResolverException::class);
+        $this->expectExceptionMessageRegExp('/must publicly exist/');
+        $this->runResolve(['invalidMethod']);
     }
 
     public function testTooManyArguments()
     {
-        $this->expectException(InvalidArgumentException::class);
+        $this->expectException(FakerResolverException::class);
+        $this->expectExceptionMessageRegExp('/can only accept one or two/i');
         $this->runResolve([1,2,3,4]);
     }
 
     private function runResolve(array $fakerArgs)
     {
         $metadata = new PropertyMetadata(User::class, 'username');
-        $metadata->fakerName = 'test';
-        $metadata->fakerResolverType = 'class';
+        $metadata->fakerName = 'myFaker';
         $metadata->fakerResolverArgs = $fakerArgs;
 
         $context = new ValueContext();
@@ -69,8 +81,25 @@ class CallbackFakerResolverTest extends TestCase
         return $context->getValue();
     }
 
-    public static function toFixture()
+    public static function toFixtureString()
     {
-        return 'test';
+        return 'foo';
+    }
+
+    public function toFixtureStringNonStatic()
+    {
+        return $this->testProp;
+    }
+
+    public static function toFixtureArray()
+    {
+        return ['bar'];
+    }
+
+    public static function toFixtureValueContext(ValueContext $context)
+    {
+        $context->setValue('baz');
+
+        return $context;
     }
 }
