@@ -7,8 +7,9 @@ class FakerGenerator
     public static function generate($fakerName, array $arguments)
     {
         $arguments = self::handleArray($arguments);
+        $arguments = strlen($arguments) > 0 ? "($arguments)" : '';
 
-        return "<$fakerName($arguments)>";
+        return "<{$fakerName}{$arguments}>";
     }
 
     private static function handleType($value)
