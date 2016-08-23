@@ -9,7 +9,6 @@ namespace Trappar\AliceGenerator\Annotation;
 final class Faker implements FixtureAnnotationInterface
 {
     /**
-     * @Required()
      * @var string
      */
     public $name;

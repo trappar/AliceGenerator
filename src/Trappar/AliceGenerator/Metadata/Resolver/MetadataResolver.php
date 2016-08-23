@@ -50,7 +50,7 @@ class MetadataResolver extends AbstractMetadataResolver
             $valueContext->setSkipped(true);
         } elseif (!is_null($valueContext->getMetadata()->staticData)) {
             $valueContext->setValue($valueContext->getMetadata()->staticData);
-        } elseif ($valueContext->getMetadata()->fakerName) {
+        } elseif ($valueContext->getMetadata()->fakerName || $valueContext->getMetadata()->fakerResolverType) {
             $this->fakerResolvers[$valueContext->getMetadata()->fakerResolverType]->resolve($valueContext);
         }
     }
