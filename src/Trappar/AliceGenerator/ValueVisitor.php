@@ -218,14 +218,16 @@ class ValueVisitor
             if (!$valueContext->isModified()) {
                 $value = $valueContext->getValue();
 
-                // Avoid setting unnecessary data
-                if (is_null($value) || is_bool($value) || is_object($value)) {
-                    if ($value === $initialValue) {
-                        continue;
-                    }
-                } else {
-                    if ($value == $initialValue) {
-                        continue;
+                if ($this->fixtureGenerationContext->getExcludeDefaultValues()) {
+                    // Avoid setting unnecessary data
+                    if (is_null($value) || is_bool($value) || is_object($value)) {
+                        if ($value === $initialValue) {
+                            continue;
+                        }
+                    } else {
+                        if ($value == $initialValue) {
+                            continue;
+                        }
                     }
                 }
 

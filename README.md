@@ -98,6 +98,7 @@ composer require trappar/alice-generator-bundle
       * [Limiting Recursion Depth](doc/usage.md#limiting-recursion-depth)
       * [Limiting Recursion With Object Constraints](doc/usage.md#limiting-recursion-with-object-constraints)
     * [Customizing Reference Naming Strategy](doc/usage.md#customizing-reference-naming-strategy)
+    * [Force Inclusion of Properties at Default Values](doc/usage.md#force-inclusion-of-properties-at-default-values)
 * [Property Metadata](doc/metadata.md)
   * [Data](doc/metadata.md#data)
   * [Ignore](doc/metadata.md#ignore)

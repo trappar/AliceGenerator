@@ -76,7 +76,7 @@ Fixture generation will traverse from one object to related objects through an o
 
 ### Customizing Reference Naming Strategy
 
-`setReferenceNamer` - allows you to specify a custom class for handling reference names.
+`setReferenceNamer( ReferenceNamerInterface $referenceNamer )` - allows you to specify a custom class for handling reference names.
 
 There are two ReferenceNamer classes included in this library:
 
@@ -102,5 +102,12 @@ $fixtureGenerator->generateYaml($post, FixtureGenerationContext::create()->setRe
 ```
 
 You can also create your own ReferenceNamer by implementing `Trappar\AliceGenerator\ReferenceNamer\ReferenceNamerInterface` in your class.
+
+### Force Inclusion of Properties at Default Values
+
+`setExcludeDefaultValues( bool $exclude )` - Setting this to true/false causes properties to be handled differently during fixture generation.
+
+* When true (default) - a property which is the same value as a newly initialized object of the same class will be excluded from fixture generation
+* When false - all properties will be included during fixture generation
 
 [Back to Table of Contents](/README.md#table-of-contents)

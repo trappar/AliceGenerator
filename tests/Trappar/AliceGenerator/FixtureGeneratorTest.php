@@ -162,6 +162,18 @@ class FixtureGeneratorTest extends TestCase
         $this->assertSame('user1', current($results)->username);
     }
 
+    public function testNotExcludingDefaultValues()
+    {
+        $results = FixtureUtils::getFixturesFromObjects(
+            new User(),
+            FixtureGenerationContext::create()
+                ->setExcludeDefaultValues(false)
+        );
+
+        $this->assertCount(1, $results);
+        $this->assertArrayHasKey('username', $results[User::class]['User-1']);
+    }
+
     private function createTestData()
     {
         $user           = new User();

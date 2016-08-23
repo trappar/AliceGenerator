@@ -13,14 +13,19 @@ class FixtureGenerationContext
     /**
      * @var int
      */
-    protected $maximumRecursion = 5;
-
-    protected $persistedObjectConstraints;
-
+    private $maximumRecursion = 5;
+    /**
+     * @var PersistedObjectConstraints
+     */
+    private $persistedObjectConstraints;
     /**
      * @var ReferenceNamerInterface
      */
-    protected $referenceNamer;
+    private $referenceNamer;
+    /**
+     * @var boolean
+     */
+    private $excludeDefaultValues = true;
 
     public static function create()
     {
@@ -93,6 +98,25 @@ class FixtureGenerationContext
     public function setReferenceNamer(ReferenceNamerInterface $referenceNamer)
     {
         $this->referenceNamer = $referenceNamer;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function getExcludeDefaultValues()
+    {
+        return $this->excludeDefaultValues;
+    }
+
+    /**
+     * @param boolean $excludeDefaultValues
+     * @return FixtureGenerationContext
+     */
+    public function setExcludeDefaultValues($excludeDefaultValues)
+    {
+        $this->excludeDefaultValues = $excludeDefaultValues;
 
         return $this;
     }
