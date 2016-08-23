@@ -2,6 +2,8 @@
 
 namespace Trappar\AliceGenerator\Annotation;
 
+use Doctrine\Common\Annotations\Annotation\Required;
+
 /**
  * @Annotation
  * @Target("PROPERTY")

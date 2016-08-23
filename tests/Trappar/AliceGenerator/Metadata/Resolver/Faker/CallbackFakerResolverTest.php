@@ -5,7 +5,6 @@ namespace Trappar\AliceGenerator\Tests\Metadata\Resolver\Faker;
 use PHPUnit\Framework\TestCase;
 use Trappar\AliceGenerator\DataStorage\ValueContext;
 use Trappar\AliceGenerator\Exception\FakerResolverException;
-use Trappar\AliceGenerator\Exception\InvalidArgumentException;
 use Trappar\AliceGenerator\Metadata\PropertyMetadata;
 use Trappar\AliceGenerator\Metadata\Resolver\Faker\CallbackFakerResolver;
 use Trappar\AliceGenerator\Tests\Fixtures\User;
