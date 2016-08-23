@@ -15,7 +15,7 @@ $fixtureGenerator = \Trappar\AliceGenerator\FixtureGeneratorBuilder::create()->b
 
 ## Using with Doctrine
 
-The `FixtureGenerator` configured above will work fine with any object with no special configuration, but it also has the ability to be configured to work better with Doctrine:
+The `FixtureGenerator` configured above will work fine with any object and no special configuration, but it also has the ability to be configured to work better with Doctrine:
 
 ```php
 <?php
@@ -32,7 +32,7 @@ $fixtureGenerator = \Trappar\AliceGenerator\FixtureGeneratorBuilder::create()
     ->build();
 ```
 
-This `Persister` does a number of things:
+The `DoctrinePersister` affects FixtureGeneration in a number of ways:
 
    * Prevents ID properties from being saved into fixtures
    * Handles Doctrine proxy objects

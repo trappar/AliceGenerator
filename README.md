@@ -1,5 +1,5 @@
 AliceGenerator [![Build Status](https://travis-ci.org/trappar/AliceGenerator.svg?branch=master)](https://travis-ci.org/trappar/AliceGenerator)
-===========
+==============
 
 Recursively convert existing objects into [Alice](https://github.com/nelmio/alice) Fixtures.
 
@@ -73,7 +73,7 @@ composer require trappar/alice-generator-bundle
   * Supports Symfony via [AliceGeneratorBundle](https://github.com/trappar/AliceGeneratorBundle) - Start generating fixtures immediately with *zero custom code required!*
 * ORM support
   * Supports Doctrine natively
-  * Can perate without any ORM
+  * Can operate without any ORM
   * Can be extended to support any ORM
 * Many ways to make use of Faker providers
 * Configure how your objects are serialized using annotations or YAML metadata
@@ -82,7 +82,7 @@ composer require trappar/alice-generator-bundle
   * Handles circular references automatically
   * Customizable maximum recursion depth
   * Can restrict object traversal to only specific objects of a type
-* Supports several methods of naming Alice references natively, fully customizable
+* Supports several methods of naming Alice references natively - fully customizable
 
 ## Table of Contents
 
