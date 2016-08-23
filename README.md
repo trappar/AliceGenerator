@@ -3,15 +3,7 @@ AliceGenerator [![Build Status](https://travis-ci.org/trappar/AliceGenerator.svg
 
 Recursively convert existing objects into [Alice](https://github.com/nelmio/alice) Fixtures.
 
-## Documentation
-
-1. [Why?](#why)
-    1. [Example](#example)
-2. [Installation](#installation)
-3. [Basic usage](#basic-usage)
-4. [Resources](#resources)
-
-## Why?
+## Introduction
 
 Sometimes you find yourself working on a large project with no existing fixtures.
 In this case even though Alice makes fixtures much easier to write, that process can still be tedious.
@@ -26,21 +18,18 @@ Let's say you have the following objects
 
 ```php
 <?php
-
-class Post
-{
+class Post {
     public $title;
     public $body;
     public $postedBy;
 }
 
-class User
-{
+class User {
     public $username;
 }
 
 $user = new User();
-$user->username = 'Jeff';
+$user->username = 'Trappar';
 
 $post1 = new Post();
 $post1->title = 'Is Making Fixtures Too Time Consuming?';
@@ -75,79 +64,57 @@ User:
 You can use [Composer](https://getcomposer.org/) to install the bundle to your project:
 
 ```bash
-composer require --dev trappar/alice-generator-bundle
+composer require trappar/alice-generator-bundle
 ```
 
 ## Features
 
-  * Framework support
-    * Supports Symfony via [AliceGeneratorBundle](https://github.com/trappar/AliceGeneratorBundle) - Start generating fixtures immediately with *zero custom code required!*
-  * ORM support
-    * Supports Doctrine natively
-    * Can operate without any ORM
-    * Can be extended to support any ORM
-  * Many ways to make use of Faker providers
-  * Configure how your objects are serialized using annotations or YAML metadata
-  * Can serialize any object type using custom ObjectHandlers
-  * Supports multiple levels of recursion taming
-    * Handles circular references automatically
-    * Customizable maximum recursion depth
-    * Can restrict object traversal to only specific objects of a type
-  * Supports several methods of naming Alice references natively, fully customizable
+* Framework support
+  * Supports Symfony via [AliceGeneratorBundle](https://github.com/trappar/AliceGeneratorBundle) - Start generating fixtures immediately with *zero custom code required!*
+* ORM support
+  * Supports Doctrine natively
+  * Can perate without any ORM
+  * Can be extended to support any ORM
+* Many ways to make use of Faker providers
+* Configure how your objects are serialized using annotations or YAML metadata
+* Can serialize any object type using custom ObjectHandlers
+* Supports multiple levels of recursion taming
+  * Handles circular references automatically
+  * Customizable maximum recursion depth
+  * Can restrict object traversal to only specific objects of a type
+* Supports several methods of naming Alice references natively, fully customizable
 
-## Basic usage
+## Table of Contents
 
-Using the FixtureGeneratorBuilder to produce a FixtureGenerator
-
-```php
-<?php
-
-use Trappar\AliceGenerator\FixtureGeneratorBuilder;
-
-$builder = new FixtureGeneratorBuilder();
-$fixtureGenerator = $builder->build();
-```
-
-To use Doctrine
-
-```php
-<?php
-
-use Trappar\AliceGenerator\FixtureGeneratorBuilder;
-use Trappar\AliceGenerator\Persister\DoctrinePersister;
-
-/**
- * We will need an instance of a Doctrine ObjectManager (or EntityManager)
- * @var \Doctrine\Common\Persistence\ObjectManager $om
- */
-
-$builder = new FixtureGeneratorBuilder();
-$builder->setPersister(new DoctrinePersister($om));
-$fixtureGenerator = $builder->build();
-````
-
-Using a FixtureGenerator
-
-```php
-<?php
-
-/** @var \Trappar\AliceGenerator\FixtureGenerator $fixtureGenerator */
-
-$obj = new \stdClass();
-$obj->myProp = 'test';
-
-$yaml = $fixtureGenerator->generateYaml($obj);
-
-echo $yaml;
-```
+* [Configuration](doc/configuration.md)
+  * [Constructing a FixtureGenerator](doc/configuration.md#constructing-a-fixturegenerator)
+  * [Using with Doctrine](doc/configuration.md#using-with-doctrine)
+  * [Adding Custom Object Handlers](doc/configuration.md#adding-custom-object-handlers)
+  * [Configuring Metadata Locations](doc/configuration.md#configuring-metadata-locations)
+* [Usage](doc/usage.md)
+  * [Basic usage](doc/usage.md#basic-usage)
+  * [Fixture Generation Contexts](doc/usage.md#fixture-generation-contexts)
+    * [Limiting Recursion](doc/usage.md#limiting-recursion)
+      * [Limiting Recursion Depth](doc/usage.md#limiting-recursion-depth)
+      * [Limiting Recursion With Object Constraints](doc/usage.md#limiting-recursion-with-object-constraints)
+    * [Customizing Reference Naming Strategy](doc/usage.md#customizing-reference-naming-strategy)
+* [Property Metadata](doc/metadata.md)
+  * [Data](doc/metadata.md#data)
+  * [Ignore](doc/metadata.md#ignore)
+  * [Faker](doc/metadata.md#faker)
+  * [Built-in Faker Resolver Types](doc/metadata.md#built-in-faker-resolver-types)
+    * [array](doc/metadata.md#array)
+    * [value-as-arg](doc/metadata.md#value-as-arg)
+    * [callback](doc/metadata.md#callback)
+* [Custom Object Handlers](doc/custom-object-handlers.md)
 
 ## Credits
 
-This bundle was developped by [Jeff Way](https://github.com/trappar) with quite a lot of inspiration from:
+This bundle was developed by [Jeff Way](https://github.com/trappar) with quite a lot of inspiration from:
  * [nelmio/alice](https://github.com/nelmio/alice)
  * [schmittjoh/serializer](https://github.com/schmittjoh/serializer)
 
-[Other contributors](https://github.com/trappar/AliceGeneratorBundle/graphs/contributors).
+[Other contributors](https://github.com/trappar/AliceGenerator/graphs/contributors).
 
 ## License
 
