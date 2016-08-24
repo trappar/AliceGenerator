@@ -23,9 +23,13 @@ class FixtureGenerationContext
      */
     private $referenceNamer;
     /**
-     * @var boolean
+     * @var bool
      */
     private $excludeDefaultValues = true;
+    /**
+     * @var bool
+     */
+    private $sortResults = true;
 
     public static function create()
     {
@@ -105,7 +109,7 @@ class FixtureGenerationContext
     /**
      * @return boolean
      */
-    public function getExcludeDefaultValues()
+    public function isExcludeDefaultValuesEnabled()
     {
         return $this->excludeDefaultValues;
     }
@@ -117,6 +121,25 @@ class FixtureGenerationContext
     public function setExcludeDefaultValues($excludeDefaultValues)
     {
         $this->excludeDefaultValues = $excludeDefaultValues;
+
+        return $this;
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isSortResultsEnabled()
+    {
+        return $this->sortResults;
+    }
+
+    /**
+     * @param boolean $sortResults
+     * @return FixtureGenerationContext
+     */
+    public function setSortResults($sortResults)
+    {
+        $this->sortResults = $sortResults;
 
         return $this;
     }

@@ -211,7 +211,7 @@ class ValueVisitor
             if (!$valueContext->isModified() && !$valueContext->isSkipped()) {
                 $value = $valueContext->getValue();
 
-                if ($this->fixtureGenerationContext->getExcludeDefaultValues()) {
+                if ($this->fixtureGenerationContext->isExcludeDefaultValuesEnabled()) {
                     // Avoid setting unnecessary data
                     if (is_null($value) || is_bool($value) || is_object($value)) {
                         if ($value === $initialValue) {

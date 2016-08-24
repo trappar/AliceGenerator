@@ -110,4 +110,13 @@ You can also create your own ReferenceNamer by implementing `Trappar\AliceGenera
 * When true (default) - a property which is the same value as a newly initialized object of the same class will be excluded from fixture generation
 * When false - all properties will be included during fixture generation
 
+### Sorting Resulting Alice Fixtures
+
+`setSortResults( bool $sort )` - Setting this to true/false enables/disables sorting of returned Alice fixtures.
+
+* When true (default) - The returned Alice fixtures will be sorted both by object type, and in each object type by reference name
+* When false - no sorting will be used
+
+Sorting results by default is partially an aesthetic choice, and partially to ensure that the returned results always appear in the same order so subsequent fixture generation on the same/similar objects will return the same results.
+
 [Back to Table of Contents](/README.md#table-of-contents)

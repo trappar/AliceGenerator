@@ -10,6 +10,7 @@ use Trappar\AliceGenerator\FixtureGeneratorBuilder;
 use Trappar\AliceGenerator\Persister\NonSpecificPersister;
 use Trappar\AliceGenerator\ReferenceNamer\NamespaceNamer;
 use Trappar\AliceGenerator\Tests\Fixtures\Post;
+use Trappar\AliceGenerator\Tests\Fixtures\SortTester;
 use Trappar\AliceGenerator\Tests\Fixtures\User;
 use Trappar\AliceGenerator\Tests\Util\FixtureUtils;
 use Trappar\AliceGenerator\YamlWriter;
@@ -20,7 +21,7 @@ class FixtureGeneratorTest extends TestCase
     {
         $fg = FixtureGeneratorBuilder::create()->build();
 
-        $obj = new TestObject();
+        $obj      = new TestObject();
         $obj->foo = 'bar';
 
         $result = $fg->generateArray($obj);
@@ -58,7 +59,7 @@ class FixtureGeneratorTest extends TestCase
 
     public function testWithUnknownObjectType()
     {
-        $user = new User();
+        $user           = new User();
         $user->username = new \Exception();
 
         $this->expectException(UnknownObjectTypeException::class);
@@ -67,10 +68,10 @@ class FixtureGeneratorTest extends TestCase
 
     public function testGenerateYaml()
     {
-        $post = new Post();
+        $post        = new Post();
         $post->title = 'test';
 
-        $fg = FixtureUtils::buildFixtureGenerator();
+        $fg   = FixtureUtils::buildFixtureGenerator();
         $yaml = $fg->generateYaml($post);
 
         $this->assertSame(
@@ -81,12 +82,12 @@ class FixtureGeneratorTest extends TestCase
 
     public function testGenerateYamlCustomSpacing()
     {
-        $post = new Post();
+        $post        = new Post();
         $post->title = 'test';
 
         $fgBuilder = FixtureUtils::buildFixtureGeneratorBuilder([]);
         $fgBuilder->setYamlWriter(new YamlWriter(1, 1));
-        $fg = $fgBuilder->build();
+        $fg   = $fgBuilder->build();
         $yaml = $fg->generateYaml($post);
 
         $this->assertSame(
@@ -101,7 +102,7 @@ class FixtureGeneratorTest extends TestCase
         $fgBuilder->setPersister(new NonSpecificPersister());
         $fg = $fgBuilder->build();
 
-        $post = new Post();
+        $post        = new Post();
         $post->title = 'test';
 
         $results = $fg->generateArray($post);
@@ -146,8 +147,8 @@ class FixtureGeneratorTest extends TestCase
 
     public function testIgnore()
     {
-        $user = new User();
-        $user->username = 'test';
+        $user            = new User();
+        $user->username  = 'test';
         $user->lastLogin = 'something';
 
         $results = FixtureUtils::getFixturesFromObjects($user);
@@ -157,16 +158,40 @@ class FixtureGeneratorTest extends TestCase
 
     public function testIgnoreOnRelation()
     {
-        $post = new Post();
+        $post       = new Post();
         $post->body = 'test';
 
-        $relatedPost = new Post();
+        $relatedPost       = new Post();
         $relatedPost->body = 'test';
         $post->relatedPost = $relatedPost;
 
         $results = FixtureUtils::getFixturesFromObjects($post);
 
         $this->assertCount(1, $results[Post::class]);
+    }
+
+    public function testSortReferences()
+    {
+        $user            = new User();
+        $tester          = new SortTester();
+        $tester->related = new SortTester();
+
+        $unsortedResults = FixtureUtils::getFixturesFromObjects(
+            [$user, $tester],
+            FixtureGenerationContext::create()
+                ->setSortResults(false)
+        );
+
+        $sortedResults = FixtureUtils::getFixturesFromObjects(
+            [$user, $tester],
+            FixtureGenerationContext::create()
+                ->setSortResults(true)
+        );
+
+        $this->assertSame([User::class, SortTester::class], array_keys($unsortedResults));
+        $this->assertSame([SortTester::class, User::class], array_keys($sortedResults));
+        $this->assertSame(['SortTester-2', 'SortTester-1'], array_keys($unsortedResults[SortTester::class]));
+        $this->assertSame(['SortTester-1', 'SortTester-2'], array_keys($sortedResults[SortTester::class]));
     }
 
     public function testEntityConstraints()

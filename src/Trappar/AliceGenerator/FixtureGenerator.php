@@ -56,7 +56,16 @@ class FixtureGenerator
         $this->valueVisitor->setup($fixtureGenerationContext);
         $this->valueVisitor->visitSimpleValue($value);
 
-        return $this->valueVisitor->getResults();
+        $results = $this->valueVisitor->getResults();
+
+        if ($fixtureGenerationContext->isSortResultsEnabled()) {
+            ksort($results);
+            foreach ($results as &$objectType) {
+                ksort($objectType);
+            }
+        }
+
+        return $results;
     }
 
     public function generateYaml($value, $fixtureGenerationContext = null)
