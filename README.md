@@ -94,11 +94,6 @@ composer require trappar/alice-generator-bundle
       * [Limiting Recursion With Object Constraints](doc/usage.md#limiting-recursion-with-object-constraints)
     * [Customizing Reference Naming Strategy](doc/usage.md#customizing-reference-naming-strategy)
     * [Force Inclusion of Properties at Default Values](doc/usage.md#force-inclusion-of-properties-at-default-values)
-* [Configuration](doc/configuration.md)
-  * [Constructing a FixtureGenerator](doc/configuration.md#constructing-a-fixturegenerator)
-  * [Using with Doctrine](doc/configuration.md#using-with-doctrine)
-  * [Adding Custom Object Handlers](doc/configuration.md#adding-custom-object-handlers)
-  * [Configuring Metadata Locations](doc/configuration.md#configuring-metadata-locations)
 * [Property Metadata](doc/metadata.md)
   * [Data](doc/metadata.md#data)
   * [Ignore](doc/metadata.md#ignore)
@@ -108,6 +103,11 @@ composer require trappar/alice-generator-bundle
     * [value-as-arg](doc/metadata.md#value-as-arg)
     * [callback](doc/metadata.md#callback)
 * [Custom Object Handlers](doc/custom-object-handlers.md)
+* [Configuration](doc/configuration.md)
+  * [Constructing a FixtureGenerator](doc/configuration.md#constructing-a-fixturegenerator)
+  * [Using with Doctrine](doc/configuration.md#using-with-doctrine)
+  * [Adding Custom Object Handlers](doc/configuration.md#adding-custom-object-handlers)
+  * [Configuring Metadata Locations](doc/configuration.md#configuring-metadata-locations)
 
 ## Credits
 
