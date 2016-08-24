@@ -2,7 +2,7 @@
 
 ## Basic Usage
 
-There are two primary methods you can use in the `FixtureGenerator`, these are:
+There are two primary methods you can use in the `FixtureGenerator`. These are:
 
    * `string generateYaml ( object|array<object> $objects [, FixtureGenerationContext $context ] )` - Returns a string of formatted YAML Alice fixtures
    * `array generateArray ( object|array<object> $objects [, FixtureGenerationContext $context ] )` - Returns an array of Alice fixtures
@@ -27,7 +27,7 @@ echo $yaml; // Or save this to the filesystem
 
 ## Fixture Generation Contexts
 
-Fixture Generation Contexts allow you to specify options which will a particular fixture generation run. Using them is easy:
+Fixture Generation Contexts allow you to specify options which will affect a particular fixture generation run. Using them is easy:
 
 ```php
 <?php
