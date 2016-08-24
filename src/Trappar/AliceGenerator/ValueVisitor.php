@@ -208,7 +208,7 @@ class ValueVisitor
 
             $this->metadataResolver->resolve($valueContext);
 
-            if (!$valueContext->isModified()) {
+            if (!$valueContext->isModified() && !$valueContext->isSkipped()) {
                 $value = $valueContext->getValue();
 
                 if ($this->fixtureGenerationContext->getExcludeDefaultValues()) {

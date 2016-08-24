@@ -155,6 +155,20 @@ class FixtureGeneratorTest extends TestCase
         $this->assertArrayNotHasKey('lastLogin', $results[User::class]['User-1']);
     }
 
+    public function testIgnoreOnRelation()
+    {
+        $post = new Post();
+        $post->body = 'test';
+
+        $relatedPost = new Post();
+        $relatedPost->body = 'test';
+        $post->relatedPost = $relatedPost;
+
+        $results = FixtureUtils::getFixturesFromObjects($post);
+
+        $this->assertCount(1, $results[Post::class]);
+    }
+
     public function testEntityConstraints()
     {
         $user1           = new User();

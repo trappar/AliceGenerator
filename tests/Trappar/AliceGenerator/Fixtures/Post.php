@@ -33,5 +33,12 @@ class Post
      * @ORM\ManyToOne(targetEntity="User", inversedBy="posts")
      */
     public $postedBy;
+
+    /**
+     * @var Post
+     * @ORM\OneToOne(targetEntity="Post")
+     * @Fixture\Ignore
+     */
+    public $relatedPost;
 }
 
