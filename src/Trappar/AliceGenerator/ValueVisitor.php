@@ -76,9 +76,7 @@ class ValueVisitor
 
     public function visitSimpleValue($value)
     {
-        $valueContext = new ValueContext();
-        $valueContext->setValueVisitor($this);
-        $valueContext->setValue($value, false);
+        $valueContext = new ValueContext($value);
 
         $this->visitUnknownType($valueContext);
 
@@ -202,12 +200,7 @@ class ValueVisitor
             $value        = $metadata->reflection->getValue($object);
             $initialValue = $metadata->reflection->getValue($newObject);
 
-            $valueContext = new ValueContext();
-            $valueContext
-                ->setValueVisitor($this)
-                ->setMetadata($metadata)
-                ->setContextObject($object)
-                ->setValue($value, false);
+            $valueContext = new ValueContext($value, $class, $object, $metadata, $this);
 
             if ($this->persister->isPropertyNoOp($valueContext)) {
                 continue;

@@ -20,8 +20,7 @@ class DateTimeHandlerTest extends TestCase
 
     public function testDateOnly()
     {
-        $valueContext = new ValueContext();
-        $valueContext->setValue(new \DateTime('Aug 3, 1955'));
+        $valueContext = new ValueContext(new \DateTime('Aug 3, 1955'));
 
         $this->handler->handle($valueContext);
 
@@ -30,8 +29,7 @@ class DateTimeHandlerTest extends TestCase
 
     public function testDateTime()
     {
-        $valueContext = new ValueContext();
-        $valueContext->setValue(new \DateTime('Aug 3, 1955 12PM', new \DateTimeZone('UTC')));
+        $valueContext = new ValueContext(new \DateTime('Aug 3, 1955 12PM', new \DateTimeZone('UTC')));
 
         $this->handler->handle($valueContext);
 

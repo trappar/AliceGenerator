@@ -18,8 +18,7 @@ class ArrayFakerResolverTest extends TestCase
         $metadata->fakerName         = 'myFaker';
         $metadata->fakerResolverArgs = [1, true, 'test'];
 
-        $valueContext = new ValueContext();
-        $valueContext->setMetadata($metadata);
+        $valueContext = new ValueContext(null, null, null, $metadata);
 
         $resolver->resolve($valueContext);
 

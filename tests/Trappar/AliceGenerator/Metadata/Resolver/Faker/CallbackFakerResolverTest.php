@@ -71,9 +71,7 @@ class CallbackFakerResolverTest extends TestCase
         $metadata->fakerName = 'myFaker';
         $metadata->fakerResolverArgs = $fakerArgs;
 
-        $context = new ValueContext();
-        $context->setMetadata($metadata);
-        $context->setContextObject($this);
+        $context = new ValueContext(null, null, $this, $metadata);
 
         $this->resolver->resolve($context);
 

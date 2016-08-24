@@ -36,7 +36,7 @@ class CallbackFakerResolver extends AbstractFakerResolver
             if (!method_exists($contextObject = $valueContext->getContextObject(), $target)) {
                 throw new FakerResolverException($valueContext, sprintf(
                     'method "%s" must publicly exist in "%s".',
-                    $target, get_class($contextObject)
+                    $target, $valueContext->getContextObjectClass()
                 ));
             }
         }

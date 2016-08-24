@@ -18,9 +18,7 @@ class ValueAsArgFakerResolverTest extends TestCase
         $metadata->fakerName         = 'myFaker';
         $metadata->fakerResolverType = 'value-as-arg';
 
-        $context = new ValueContext();
-        $context->setMetadata($metadata);
-        $context->setValue('foo');
+        $context = new ValueContext('foo', null, null, $metadata);
 
         $resolver->resolve($context);
 

@@ -42,9 +42,6 @@ class MetadataResolverTest extends TestCase
         $metadata->fakerName = 'test';
         $metadata->fakerResolverType = 'invalid';
 
-        $valueContext = new ValueContext();
-        $valueContext->setMetadata($metadata);
-
-        return $valueContext;
+        return new ValueContext(null, null, null, $metadata);
     }
 }

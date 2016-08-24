@@ -28,6 +28,11 @@ class ValueContext
     private $contextObject;
 
     /**
+     * @var string
+     */
+    private $contextObjectClass;
+
+    /**
      * @var bool
      */
     private $modified = false;
@@ -36,6 +41,21 @@ class ValueContext
      * @var bool
      */
     private $skipped = false;
+
+    public function __construct(
+        $value = null,
+        $contextObjectClass = null,
+        $contextObject = null,
+        PropertyMetadata $metadata = null,
+        ValueVisitor $valueVisitor = null
+    )
+    {
+        $this->value              = $value;
+        $this->metadata           = $metadata;
+        $this->contextObject      = $contextObject;
+        $this->contextObjectClass = $contextObjectClass;
+        $this->valueVisitor       = $valueVisitor;
+    }
 
     /**
      * @return PropertyMetadata
@@ -46,33 +66,11 @@ class ValueContext
     }
 
     /**
-     * @param PropertyMetadata $metadata
-     * @return ValueContext
-     */
-    public function setMetadata($metadata)
-    {
-        $this->metadata = $metadata;
-
-        return $this;
-    }
-
-    /**
      * @return ValueVisitor
      */
     public function getValueVisitor()
     {
         return $this->valueVisitor;
-    }
-
-    /**
-     * @param ValueVisitor $valueVisitor
-     * @return ValueContext
-     */
-    public function setValueVisitor(ValueVisitor $valueVisitor)
-    {
-        $this->valueVisitor = $valueVisitor;
-
-        return $this;
     }
 
     /**
@@ -92,7 +90,7 @@ class ValueContext
     {
         $this->value = $value;
         if ($setModified) {
-            $this->setModified(true);
+            $this->modified = true;
         }
 
         return $this;
@@ -106,15 +104,9 @@ class ValueContext
         return $this->contextObject;
     }
 
-    /**
-     * @param mixed $contextObject
-     * @return ValueContext
-     */
-    public function setContextObject($contextObject)
+    public function getContextObjectClass()
     {
-        $this->contextObject = $contextObject;
-
-        return $this;
+        return $this->contextObjectClass;
     }
 
     /**
@@ -131,17 +123,6 @@ class ValueContext
     public function isModified()
     {
         return $this->modified;
-    }
-
-    /**
-     * @param boolean $modified
-     * @return ValueContext
-     */
-    public function setModified($modified)
-    {
-        $this->modified = $modified;
-
-        return $this;
     }
 
     /**
