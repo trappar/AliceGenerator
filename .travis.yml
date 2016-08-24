@@ -8,13 +8,33 @@ php:
 
 matrix:
   fast_finish: true
+  include:
+      - php: '7.0'
+        env: YAML_VERSION="~2.3.0"
+      - php: '7.0'
+        env: YAML_VERSION="~2.7.0"
+      - php: '7.0'
+        env: YAML_VERSION="~3.0.0"
+      - php: '7.0'
+        env: YAML_VERSION="~3.1.0"
+      - php: '7.0'
+        env: YAML_VERSION="~3.2.0@dev"
   allow_failures:
     - php: nightly
+    - env: YAML_VERSION="~3.2.0@dev"
 
 cache:
   directories:
-    - vendor
+    - $HOME/.composer/cache/files
+
+before_install:
+  # Don't run with xdebug, and don't error when xdebug isn't installed
+  - |
+    phpenv config-rm xdebug.ini || true
+    if [ "$YAML_VERSION" != "" ]; then
+      composer require "symfony/yaml:${YAML_VERSION}" --no-update
+    fi
 
 install: composer update --prefer-dist --no-interaction
 
-script: ./vendor/bin/phpunit -c phpunit.xml.dist
+script: ./vendor/bin/phpunit --stop-on-failure --verbose
