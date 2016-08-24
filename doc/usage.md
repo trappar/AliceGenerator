@@ -56,7 +56,9 @@ Pictures make these concepts quite a lot easier to grok, but it's important to u
 
 #### Limiting Recursion Depth
 
-`setMaximumRecursion( int $depth )` - allows you to limit the recursion depth. Examples:
+`setMaximumRecursion( int $depth )` - allows you to limit the recursion depth.
+
+Examples:
 
 ![depth0](https://cloud.githubusercontent.com/assets/525726/17834184/478734ce-66e9-11e6-93f9-2726e5ffdc22.png)
 
@@ -68,7 +70,11 @@ Pictures make these concepts quite a lot easier to grok, but it's important to u
 
 Fixture generation will traverse from one object to related objects through an object's properties. In our example objects, generating Fixtures with no maximum recursion on virtually any object can theoretically result in practically the whole database being dumped as Fixtures. For example, since a Post has a User and that User is part of a Group - any Users also in that Group and all Posts for all of those Users will be returned. Object constraints give you a way to avoid this problem.
 
-`addPersistedObjectConstraint( object $constrainingObject )` - allows you to limit any object type to those that you specify. Examples:
+`addPersistedObjectConstraint( object $constrainingObject )` - add an object as a persisted object constraint. This may be called multiple times with objects of the same or different classes.
+
+All objects of a given class are constrained by adding one or more objects of that class as persisted object constraints. Once a class is constrained, any object of the same class which isn't also one of the constrained objects will be completely ignored.
+
+Examples:
 
 ![userconstrained](https://cloud.githubusercontent.com/assets/525726/17834169/f720e5e8-66e8-11e6-90ff-1107e412da71.png)
 
@@ -89,15 +95,15 @@ Example:
 <?php
 use Trappar\AliceGenerator\FixtureGenerationContext;
 
-// Using the alternative NamespaceNamer with default options ignores "AppBundle" and "Entity", so references will still be like "Post-1"
+// Using the alternative NamespaceNamer - references will be like @Appbundle-Entity-Post-1
 $namer = new \Trappar\AliceGenerator\ReferenceNamer\NamespaceNamer();
 $fixtureGenerator->generateYaml($post, FixtureGenerationContext::create()->setReferenceNamer($namer));
 
 // NamespaceNamer has several options...
 $namer->setIgnoredNamespaces(['AppBundle']);
-$namer->setNamespaceSeparator('-');
+$namer->setNamespaceSeparator('_');
 
-// Now references will be like "Entity-Post-1"
+// Now references will be like "Entity_Post_1"
 $fixtureGenerator->generateYaml($post, FixtureGenerationContext::create()->setReferenceNamer($namer));
 ```
 

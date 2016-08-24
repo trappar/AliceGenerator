@@ -86,11 +86,6 @@ composer require trappar/alice-generator-bundle
 
 ## Table of Contents
 
-* [Configuration](doc/configuration.md)
-  * [Constructing a FixtureGenerator](doc/configuration.md#constructing-a-fixturegenerator)
-  * [Using with Doctrine](doc/configuration.md#using-with-doctrine)
-  * [Adding Custom Object Handlers](doc/configuration.md#adding-custom-object-handlers)
-  * [Configuring Metadata Locations](doc/configuration.md#configuring-metadata-locations)
 * [Usage](doc/usage.md)
   * [Basic usage](doc/usage.md#basic-usage)
   * [Fixture Generation Contexts](doc/usage.md#fixture-generation-contexts)
@@ -99,6 +94,11 @@ composer require trappar/alice-generator-bundle
       * [Limiting Recursion With Object Constraints](doc/usage.md#limiting-recursion-with-object-constraints)
     * [Customizing Reference Naming Strategy](doc/usage.md#customizing-reference-naming-strategy)
     * [Force Inclusion of Properties at Default Values](doc/usage.md#force-inclusion-of-properties-at-default-values)
+* [Configuration](doc/configuration.md)
+  * [Constructing a FixtureGenerator](doc/configuration.md#constructing-a-fixturegenerator)
+  * [Using with Doctrine](doc/configuration.md#using-with-doctrine)
+  * [Adding Custom Object Handlers](doc/configuration.md#adding-custom-object-handlers)
+  * [Configuring Metadata Locations](doc/configuration.md#configuring-metadata-locations)
 * [Property Metadata](doc/metadata.md)
   * [Data](doc/metadata.md#data)
   * [Ignore](doc/metadata.md#ignore)
