@@ -11,6 +11,10 @@ matrix:
   allow_failures:
     - php: nightly
 
+cache:
+  directories:
+    - vendor
+
 install: composer update --prefer-dist --no-interaction
 
 script: ./vendor/bin/phpunit -c phpunit.xml.dist
