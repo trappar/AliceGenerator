@@ -59,9 +59,9 @@ class FixtureGenerator
         $results = $this->valueVisitor->getResults();
 
         if ($fixtureGenerationContext->isSortResultsEnabled()) {
-            ksort($results);
+            ksort($results, SORT_NATURAL);
             foreach ($results as &$objectType) {
-                ksort($objectType);
+                ksort($objectType, SORT_NATURAL);
             }
         }
 
