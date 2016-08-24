@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping\ClassMetadata;
 use PHPUnit\Framework\TestCase;
 use Trappar\AliceGenerator\DataStorage\ValueContext;
 use Trappar\AliceGenerator\Persister\DoctrinePersister;
+use Trappar\AliceGenerator\Tests\Fixtures\DoctrinePersisterTester;
 use Trappar\AliceGenerator\Tests\Fixtures\User;
 use Trappar\AliceGenerator\Tests\Util\FixtureUtils;
 
@@ -53,13 +54,16 @@ class DoctrinePersisterTest extends TestCase
 
     public function testIsPropertyNoOp()
     {
-        $user = new User();
+        $tester = new DoctrinePersisterTester();
 
         $mock = $this->createMock(ValueContext::class);
-        $mock->method('getContextObject')->willReturn($user);
-        $mock->method('getPropName')->will($this->onConsecutiveCalls('id', 'username'));
+        $mock->method('getContextObject')->willReturn($tester);
+        $mock->method('getPropName')->will(
+            $this->onConsecutiveCalls('id', 'mappedProperty', 'unmappedProperty')
+        );
 
         $this->assertTrue($this->persister->isPropertyNoOp($mock));
         $this->assertFalse($this->persister->isPropertyNoOp($mock));
+        $this->assertTrue($this->persister->isPropertyNoOp($mock));
     }
 }

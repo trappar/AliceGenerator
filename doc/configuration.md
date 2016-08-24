@@ -34,7 +34,7 @@ $fixtureGenerator = \Trappar\AliceGenerator\FixtureGeneratorBuilder::create()
 
 The `DoctrinePersister` affects FixtureGeneration in a number of ways:
 
-   * Prevents ID properties from being saved into fixtures
+   * Prevents ID and unmapped properties from being saved into fixtures
    * Handles Doctrine proxy objects
    * Forces the FixtureGenerator to only save Doctrine Entities (other objects can be handled in other ways)
 

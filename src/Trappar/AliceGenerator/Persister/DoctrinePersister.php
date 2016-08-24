@@ -41,8 +41,22 @@ class DoctrinePersister extends AbstractPersister
     {
         $classMetadata = $this->getMetadata($context->getContextObject());
 
+        $propName = $context->getPropName();
+
         // Skip ID properties
-        return in_array($context->getPropName(), $classMetadata->getIdentifier());
+        $isId = in_array($propName, $classMetadata->getIdentifier());
+
+        // Skip unmapped properties
+        $mapped = true;
+        if ($classMetadata instanceof \Doctrine\ORM\Mapping\ClassMetadata) {
+            try {
+                $classMetadata->getReflectionProperty($propName);
+            } catch (\Exception $e) {
+                $mapped = false;
+            }
+        }
+
+        return $isId || !$mapped;
     }
 
     /**
