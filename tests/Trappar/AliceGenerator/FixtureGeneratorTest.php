@@ -144,6 +144,17 @@ class FixtureGeneratorTest extends TestCase
         $this->assertCount(1, FixtureUtils::convertObjectToFixtureAndBack($user));
     }
 
+    public function testIgnore()
+    {
+        $user = new User();
+        $user->username = 'test';
+        $user->lastLogin = 'something';
+
+        $results = FixtureUtils::getFixturesFromObjects($user);
+
+        $this->assertArrayNotHasKey('lastLogin', $results[User::class]['User-1']);
+    }
+
     public function testEntityConstraints()
     {
         $user1           = new User();

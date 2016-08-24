@@ -55,7 +55,7 @@ class User
 
     /**
      * @ORM\Column()
-     * @Fixture\Ignore()
+     * @Fixture\Ignore
      */
     public $lastLogin;
 
