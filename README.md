@@ -108,6 +108,10 @@ composer require trappar/alice-generator-bundle
   * [Using with Doctrine](doc/configuration.md#using-with-doctrine)
   * [Adding Custom Object Handlers](doc/configuration.md#adding-custom-object-handlers)
   * [Configuring Metadata Locations](doc/configuration.md#configuring-metadata-locations)
+  
+## Resources
+
+* [Changelog](changelog.md)
 
 ## Credits
 
