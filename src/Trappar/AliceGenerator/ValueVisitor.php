@@ -188,7 +188,8 @@ class ValueVisitor
         $this->persister->preProcess($object);
 
         // Create a new instance of this class to check values against
-        $newObject = new $class();
+        $reflectionClass = new \ReflectionClass($class);
+        $newObject = $reflectionClass->newInstanceWithoutConstructor();
 
         $classMetadata = $this->metadataFactory->getMetadataForClass($class);
         $properties    = $classMetadata->propertyMetadata;
