@@ -77,7 +77,6 @@ class ValueVisitor
     public function visitSimpleValue($value)
     {
         $valueContext = new ValueContext($value);
-
         $this->visitUnknownType($valueContext);
 
         return $valueContext;
@@ -87,9 +86,7 @@ class ValueVisitor
     {
         if (is_array($valueContext->getValue())) {
             $this->visitArray($valueContext);
-        }
-
-        if (is_object($valueContext->getValue())) {
+        } else if (is_object($valueContext->getValue())) {
             $this->visitObject($valueContext);
         }
     }
@@ -184,20 +181,16 @@ class ValueVisitor
     private function handlePersistedObject($object, $reference)
     {
         $class = $this->persister->getClass($object);
-
         $this->persister->preProcess($object);
+        $classMetadata = $this->metadataFactory->getMetadataForClass($class);
 
         // Create a new instance of this class to check values against
-        $reflectionClass = new \ReflectionClass($class);
-        $newObject = $reflectionClass->newInstanceWithoutConstructor();
-
-        $classMetadata = $this->metadataFactory->getMetadataForClass($class);
-        $properties    = $classMetadata->propertyMetadata;
+        $newObject = $classMetadata->reflection->newInstanceWithoutConstructor();
 
         $saveValues = [];
         $this->recursionDepth++;
 
-        foreach ($properties as $metadata) {
+        foreach ($classMetadata->propertyMetadata as $metadata) {
             $value        = $metadata->reflection->getValue($object);
             $initialValue = $metadata->reflection->getValue($newObject);
 
