@@ -9,6 +9,7 @@ use Trappar\AliceGenerator\FixtureGenerationContext;
 use Trappar\AliceGenerator\FixtureGeneratorBuilder;
 use Trappar\AliceGenerator\Persister\NonSpecificPersister;
 use Trappar\AliceGenerator\ReferenceNamer\NamespaceNamer;
+use Trappar\AliceGenerator\Tests\Fixtures\ObjectWithConstructor;
 use Trappar\AliceGenerator\Tests\Fixtures\Post;
 use Trappar\AliceGenerator\Tests\Fixtures\SortTester;
 use Trappar\AliceGenerator\Tests\Fixtures\User;
@@ -222,6 +223,16 @@ class FixtureGeneratorTest extends TestCase
 
         $this->assertCount(1, $results);
         $this->assertArrayHasKey('username', $results[User::class]['User-1']);
+    }
+
+    public function testOnObjectWithConstructor()
+    {
+        $this->assertCount(
+            1,
+            FixtureUtils::getFixturesFromObjects(
+                new ObjectWithConstructor('test')
+            )
+        );
     }
 
     private function createTestData()
