@@ -61,10 +61,10 @@ User:
 
 ## Installation
 
-You can use [Composer](https://getcomposer.org/) to install the bundle to your project:
+You can use [Composer](https://getcomposer.org/) to install the library to your project:
 
 ```bash
-composer require trappar/alice-generator-bundle
+composer require trappar/alice-generator
 ```
 
 ## Features
