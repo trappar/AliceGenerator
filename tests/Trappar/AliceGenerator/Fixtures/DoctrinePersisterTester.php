@@ -17,6 +17,14 @@ class DoctrinePersisterTester
      */
     public $id;
 
+
+    /**
+     * @ORM\Column()
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     */
+    public $generatedStrategyNone;
+
     /**
      * @ORM\Column()
      */

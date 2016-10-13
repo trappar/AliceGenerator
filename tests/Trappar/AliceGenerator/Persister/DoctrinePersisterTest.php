@@ -58,11 +58,13 @@ class DoctrinePersisterTest extends TestCase
 
         $mock = $this->createMock(ValueContext::class);
         $mock->method('getContextObject')->willReturn($tester);
+
         $mock->method('getPropName')->will(
-            $this->onConsecutiveCalls('id', 'mappedProperty', 'unmappedProperty')
+            $this->onConsecutiveCalls('id', 'generatedStrategyNone','mappedProperty', 'unmappedProperty')
         );
 
         $this->assertTrue($this->persister->isPropertyNoOp($mock));
+        $this->assertFalse($this->persister->isPropertyNoOp($mock));
         $this->assertFalse($this->persister->isPropertyNoOp($mock));
         $this->assertTrue($this->persister->isPropertyNoOp($mock));
     }
