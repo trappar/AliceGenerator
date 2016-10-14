@@ -8,20 +8,14 @@ use Trappar\AliceGenerator\Annotation as Fixture;
 /**
  * @ORM\Entity()
  */
-class DoctrinePersisterTester
+class DoctrinePersisterTesterGeneratorNone
 {
     /**
      * @ORM\Column()
      * @ORM\Id
-     * @ORM\GeneratedValue()
+     * @ORM\GeneratedValue(strategy="NONE")
      */
     public $id;
 
-    /**
-     * @ORM\Column()
-     */
-    public $mappedProperty;
-
-    public $unmappedProperty;
 }
 

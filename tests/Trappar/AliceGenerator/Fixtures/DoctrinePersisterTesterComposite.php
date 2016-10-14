@@ -8,7 +8,7 @@ use Trappar\AliceGenerator\Annotation as Fixture;
 /**
  * @ORM\Entity()
  */
-class DoctrinePersisterTester
+class DoctrinePersisterTesterComposite
 {
     /**
      * @ORM\Column()
@@ -16,6 +16,14 @@ class DoctrinePersisterTester
      * @ORM\GeneratedValue()
      */
     public $id;
+
+
+    /**
+     * @ORM\Column()
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
+     */
+    public $generatedStrategyNone;
 
     /**
      * @ORM\Column()

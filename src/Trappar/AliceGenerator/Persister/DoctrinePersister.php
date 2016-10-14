@@ -2,10 +2,10 @@
 
 namespace Trappar\AliceGenerator\Persister;
 
-use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Persistence\Mapping\ClassMetadata;
 use Doctrine\Common\Persistence\ObjectManager;
 use Doctrine\Common\Util\ClassUtils;
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
 use Trappar\AliceGenerator\DataStorage\ValueContext;
 
 class DoctrinePersister extends AbstractPersister
@@ -44,12 +44,10 @@ class DoctrinePersister extends AbstractPersister
 
         $propName = $context->getPropName();
 
-        // Skip ID properties
-        // @TODO Handle all ID types from Doctrine\ORM\Id
+        // Skip ID properties if they are not part of composite ID
         $ignore = false;
-        if (in_array($propName, $classMetadata->getIdentifier())){
-            $reader = new AnnotationReader();
-            $ignore = "AUTO" == $reader->getPropertyAnnotation($classMetadata->reflFields[$propName], 'Doctrine\ORM\Mapping\GeneratedValue')->strategy;
+        if ($classMetadata->isIdentifier($propName) && $classMetadata->generatorType != ClassMetadataInfo::GENERATOR_TYPE_NONE && !$classMetadata->isIdentifierComposite){
+            $ignore = true;
         }
 
         // Skip unmapped properties

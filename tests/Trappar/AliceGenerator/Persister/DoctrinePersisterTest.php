@@ -8,6 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Trappar\AliceGenerator\DataStorage\ValueContext;
 use Trappar\AliceGenerator\Persister\DoctrinePersister;
 use Trappar\AliceGenerator\Tests\Fixtures\DoctrinePersisterTester;
+use Trappar\AliceGenerator\Tests\Fixtures\DoctrinePersisterTesterGeneratorNone;
 use Trappar\AliceGenerator\Tests\Fixtures\User;
 use Trappar\AliceGenerator\Tests\Util\FixtureUtils;
 
@@ -60,12 +61,25 @@ class DoctrinePersisterTest extends TestCase
         $mock->method('getContextObject')->willReturn($tester);
 
         $mock->method('getPropName')->will(
-            $this->onConsecutiveCalls('id', 'generatedStrategyNone','mappedProperty', 'unmappedProperty')
+            $this->onConsecutiveCalls('id', 'mappedProperty', 'unmappedProperty')
         );
 
         $this->assertTrue($this->persister->isPropertyNoOp($mock));
         $this->assertFalse($this->persister->isPropertyNoOp($mock));
-        $this->assertFalse($this->persister->isPropertyNoOp($mock));
         $this->assertTrue($this->persister->isPropertyNoOp($mock));
+    }
+
+    public function testGeneratorNone()
+    {
+        $tester = new DoctrinePersisterTesterGeneratorNone();
+
+        $mock = $this->createMock(ValueContext::class);
+        $mock->method('getContextObject')->willReturn($tester);
+
+        $mock->method('getPropName')->will(
+            $this->onConsecutiveCalls('id')
+        );
+
+        $this->assertFalse($this->persister->isPropertyNoOp($mock));
     }
 }
