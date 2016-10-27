@@ -65,7 +65,7 @@ class DoctrinePersister extends AbstractPersister
 
     /**
      * @param $object
-     * @return bool|ClassMetadata
+     * @return bool|ClassMetadata|ClassMetadataInfo
      */
     private function getMetadata($object)
     {
