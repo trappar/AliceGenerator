@@ -111,7 +111,7 @@ composer require trappar/alice-generator
   
 ## Resources
 
-* [Changelog](changelog.md)
+* [Changelog](CHANGELOG.md)
 
 ## Credits
 
