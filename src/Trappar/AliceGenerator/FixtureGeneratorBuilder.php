@@ -53,6 +53,10 @@ class FixtureGeneratorBuilder
      * @var YamlWriterInterface
      */
     private $yamlWriter;
+    /**
+     * @var bool
+     */
+    private $strictTypeChecking = true;
 
     public static function create()
     {
@@ -195,6 +199,15 @@ class FixtureGeneratorBuilder
     public function setYamlWriter(YamlWriterInterface $yamlWriter)
     {
         $this->yamlWriter = $yamlWriter;
+
+        return $this;
+    }
+
+    public function setStrictTypeChecking($enabled)
+    {
+        $this->strictTypeChecking = $enabled;
+
+        return $this;
     }
 
     /**
@@ -211,10 +224,13 @@ class FixtureGeneratorBuilder
         }
 
         return new FixtureGenerator(
-            $metadataFactory,
-            $this->persister,
-            $this->metadataResolver,
-            $this->objectHandlerRegistry,
+            new ValueVisitor(
+                $metadataFactory,
+                $this->persister,
+                $this->metadataResolver,
+                $this->objectHandlerRegistry,
+                $this->strictTypeChecking
+            ),
             $this->yamlWriter
         );
     }

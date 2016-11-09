@@ -235,6 +235,24 @@ class FixtureGeneratorTest extends TestCase
         );
     }
 
+    public function testStrictTypeChecking()
+    {
+        $post = new Post();
+        $post->body = 0;
+
+        $builder = FixtureUtils::buildFixtureGeneratorBuilder(false);
+
+        $this->assertCount(
+            1,
+            $builder->setStrictTypeChecking(true)->build()->generateArray($post)
+        );
+
+        $this->assertCount(
+            0,
+            $builder->setStrictTypeChecking(false)->build()->generateArray($post)
+        );
+    }
+
     private function createTestData()
     {
         $user           = new User();

@@ -44,18 +44,24 @@ class ValueVisitor
      * @var int
      */
     private $recursionDepth;
+    /**
+     * @var boolean
+     */
+    private $strictTypeChecking;
 
     public function __construct(
         MetadataFactoryInterface $metadataFactory,
         PersisterInterface $persister,
         MetadataResolverInterface $metadataResolver,
-        ObjectHandlerRegistryInterface $objectHandlerRegistry
+        ObjectHandlerRegistryInterface $objectHandlerRegistry,
+        $strictTypeChecking
     )
     {
         $this->metadataFactory       = $metadataFactory;
         $this->persister             = $persister;
         $this->metadataResolver      = $metadataResolver;
         $this->objectHandlerRegistry = $objectHandlerRegistry;
+        $this->strictTypeChecking    = $strictTypeChecking;
     }
 
     public function setup(FixtureGenerationContext $fixtureGenerationContext)
@@ -88,6 +94,27 @@ class ValueVisitor
             $this->visitArray($valueContext);
         } else if (is_object($valueContext->getValue())) {
             $this->visitObject($valueContext);
+        }
+    }
+
+    public function visitArray(ValueContext $valueContext)
+    {
+        $array = $valueContext->getValue();
+
+        foreach ($array as $key => &$item) {
+            $itemValueContext = $this->visitSimpleValue($item);
+
+            if ($itemValueContext->isSkipped()) {
+                unset($array[$key]);
+            } else {
+                $array[$key] = $itemValueContext->getValue();
+            }
+        }
+
+        if (!count($array)) {
+            $valueContext->setSkipped(true);
+        } else {
+            $valueContext->setValue($array);
         }
     }
 
@@ -150,27 +177,6 @@ class ValueVisitor
         }
     }
 
-    public function visitArray(ValueContext $valueContext)
-    {
-        $array = $valueContext->getValue();
-
-        foreach ($array as $key => &$item) {
-            $itemValueContext = $this->visitSimpleValue($item);
-
-            if ($itemValueContext->isSkipped()) {
-                unset($array[$key]);
-            } else {
-                $array[$key] = $itemValueContext->getValue();
-            }
-        }
-
-        if (!count($array)) {
-            $valueContext->setSkipped(true);
-        } else {
-            $valueContext->setValue($array);
-        }
-    }
-
     /**
      * @param       $object
      * @param       $reference
@@ -207,7 +213,7 @@ class ValueVisitor
 
                 if ($this->fixtureGenerationContext->isExcludeDefaultValuesEnabled()) {
                     // Avoid setting unnecessary data
-                    if (is_null($value) || is_bool($value) || is_object($value)) {
+                    if ($this->strictTypeChecking || is_null($value) || is_bool($value) || is_object($value)) {
                         if ($value === $initialValue) {
                             continue;
                         }

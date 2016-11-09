@@ -31,16 +31,16 @@ class FixtureGenerationContext
      */
     private $sortResults = true;
 
-    public static function create()
-    {
-        return new static();
-    }
-
     public function __construct()
     {
         $this->referenceNamer             = new ClassNamer();
         $this->persistedObjectConstraints = new PersistedObjectConstraints();
         $this->persistedObjectConstraints->setPersister(new NonSpecificPersister());
+    }
+
+    public static function create()
+    {
+        return new static();
     }
 
     /**
@@ -62,11 +62,6 @@ class FixtureGenerationContext
         return $this;
     }
 
-    public function getPersistedObjectConstraints()
-    {
-        return $this->persistedObjectConstraints;
-    }
-
     /**
      * @param array|object $objects
      * @return FixtureGenerationContext
@@ -85,6 +80,11 @@ class FixtureGenerationContext
         }
 
         return $this;
+    }
+
+    public function getPersistedObjectConstraints()
+    {
+        return $this->persistedObjectConstraints;
     }
 
     /**

@@ -90,4 +90,10 @@ If you use `MyApplication\Entity` as prefix, your metadata files would need to l
 
 Please keep in mind that you currently may only have **one directory per namespace prefix.** If you add a namespace prefix which already exists it will simply overwrite the previous directory configured for that prefix.
 
+## Disabling Strict Type Checking
+
+By default this library compares each value found in objects passed into it against the default value for that property. This comparison is done using the identical operator (===). By turning off strict type checking the `FixtureGenerator` will instead use the equal operator (==) whenever the value is **not** a null, bool, or object. This can be helpful if your schema contains certain situations, like when properties default as false but are saved in the database as either 0/1.
+
+`setStrictTypeChecking( bool $enabled )` - Defaults to true.
+
 [Back to Table of Contents](/README.md#table-of-contents)

@@ -2,49 +2,31 @@
 
 namespace Trappar\AliceGenerator;
 
-use Metadata\MetadataFactoryInterface;
-use Trappar\AliceGenerator\Metadata\Resolver\MetadataResolverInterface;
-use Trappar\AliceGenerator\Persister\PersisterInterface;
-
 class FixtureGenerator
 {
+    /**
+     * @var ValueVisitor
+     */
     private $valueVisitor;
-    /**
-     * @var MetadataFactoryInterface
-     */
-    private $metadataFactory;
-    /**
-     * @var PersisterInterface
-     */
-    private $persister;
-    /**
-     * @var MetadataResolverInterface
-     */
-    private $metadataResolver;
-    /**
-     * @var ObjectHandlerRegistryInterface
-     */
-    private $objectHandlerRegistry;
     /**
      * @var YamlWriterInterface
      */
     private $yamlWriter;
 
     public function __construct(
-        MetadataFactoryInterface $metadataFactory,
-        PersisterInterface $persister,
-        MetadataResolverInterface $metadataResolver,
-        ObjectHandlerRegistryInterface $objectHandlerRegistry,
+        ValueVisitor $valueVisitor,
         YamlWriterInterface $yamlWriter
     )
     {
-        $this->metadataFactory       = $metadataFactory;
-        $this->persister             = $persister;
-        $this->metadataResolver      = $metadataResolver;
-        $this->objectHandlerRegistry = $objectHandlerRegistry;
-        $this->yamlWriter            = $yamlWriter;
+        $this->yamlWriter   = $yamlWriter;
+        $this->valueVisitor = $valueVisitor;
+    }
 
-        $this->valueVisitor = new ValueVisitor($this->metadataFactory, $this->persister, $this->metadataResolver, $this->objectHandlerRegistry);
+    public function generateYaml($value, $fixtureGenerationContext = null)
+    {
+        $results = $this->generateArray($value, $fixtureGenerationContext);
+
+        return $this->yamlWriter->write($results);
     }
 
     public function generateArray($value, $fixtureGenerationContext = null)
@@ -66,12 +48,5 @@ class FixtureGenerator
         }
 
         return $results;
-    }
-
-    public function generateYaml($value, $fixtureGenerationContext = null)
-    {
-        $results = $this->generateArray($value, $fixtureGenerationContext);
-
-        return $this->yamlWriter->write($results);
     }
 }
