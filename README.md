@@ -108,6 +108,7 @@ composer require trappar/alice-generator
   * [Using with Doctrine](doc/configuration.md#using-with-doctrine)
   * [Adding Custom Object Handlers](doc/configuration.md#adding-custom-object-handlers)
   * [Configuring Metadata Locations](doc/configuration.md#configuring-metadata-locations)
+  * [Disabling Strict Type Checking](doc/configuration.md#disabling-strict-type-checking)
   
 ## Resources
 
