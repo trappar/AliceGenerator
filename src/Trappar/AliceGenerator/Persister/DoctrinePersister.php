@@ -67,10 +67,10 @@ class DoctrinePersister extends AbstractPersister
      * @param $object
      * @return bool|ClassMetadata|ClassMetadataInfo
      */
-    private function getMetadata($object)
+    protected function getMetadata($object)
     {
         try {
-            return $this->om->getMetadataFactory()->getMetadataFor($this->getClass($object));
+            return $this->om->getClassMetadata($this->getClass($object));
         } catch (\Exception $e) {
             return false;
         }
