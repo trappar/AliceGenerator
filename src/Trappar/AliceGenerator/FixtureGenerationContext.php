@@ -14,6 +14,17 @@ class FixtureGenerationContext
      * @var int
      */
     private $maximumRecursion = 5;
+
+    /**
+     * @var int
+     */
+    private $maximumCollectionChilds; // TODO: set to null to leave current behaviour. Maybe, lets set some default value, like 10?
+
+    /**
+     * @var array
+     */
+    private $entityCollectionLimits = [];
+
     /**
      * @var PersistedObjectConstraints
      */
@@ -141,6 +152,41 @@ class FixtureGenerationContext
     {
         $this->sortResults = $sortResults;
 
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaximumCollectionChilds()
+    {
+        return $this->maximumCollectionChilds;
+    }
+
+    /**
+     * @param int $maximumCollectionChilds
+     * @return self
+     */
+    public function setMaximumCollectionChilds($maximumCollectionChilds)
+    {
+        $this->maximumCollectionChilds = $maximumCollectionChilds;
+        return $this;
+    }
+
+    public function getCollectionLimit($entityClassName)
+    {
+        if(isset($this->entityCollectionLimits[$entityClassName])) {
+            return $this->entityCollectionLimits[$entityClassName];
+        } elseif($this->maximumCollectionChilds) {
+            return $this->maximumCollectionChilds;
+        } else {
+            return false;
+        }
+    }
+
+    public function setEntityCollectionLimit($entityClassName,$limit)
+    {
+        $this->entityCollectionLimits[$entityClassName] = $limit;
         return $this;
     }
 }
