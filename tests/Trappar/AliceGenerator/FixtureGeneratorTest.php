@@ -213,6 +213,30 @@ class FixtureGeneratorTest extends TestCase
         $this->assertSame('user1', current($results)->username);
     }
 
+    public function testMaxObjectsConstraints()
+    {
+        $results = FixtureUtils::convertObjectToFixtureAndBack(
+            $this->createTestData(),
+            FixtureGenerationContext::create()
+                ->setMaximumObjects(0)
+        );
+        $this->assertCount(0, $results);
+
+        $results = FixtureUtils::convertObjectToFixtureAndBack(
+            $this->createTestData(),
+            FixtureGenerationContext::create()
+                ->setMaximumObjectsPerType(1)
+        );
+        $this->assertCount(2, $results);
+
+        $results = FixtureUtils::convertObjectToFixtureAndBack(
+            $this->createTestData(),
+            FixtureGenerationContext::create()
+                ->setMaximumObjectsForType(Post::class, 0)
+        );
+        $this->assertCount(1, $results);
+    }
+
     public function testNotExcludingDefaultValues()
     {
         $results = FixtureUtils::getFixturesFromObjects(

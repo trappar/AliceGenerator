@@ -15,6 +15,10 @@ class FixtureGenerationContext
      */
     private $maximumRecursion = 5;
     /**
+     * @var bool|int
+     */
+    private $maximumObjects = false;
+    /**
      * @var PersistedObjectConstraints
      */
     private $persistedObjectConstraints;
@@ -63,6 +67,25 @@ class FixtureGenerationContext
     }
 
     /**
+     * @return bool|int
+     */
+    public function getMaximumObjects()
+    {
+        return $this->maximumObjects;
+    }
+
+    /**
+     * @param bool|int $maximumObjects
+     * @return FixtureGenerationContext
+     */
+    public function setMaximumObjects($maximumObjects)
+    {
+        $this->maximumObjects = $maximumObjects;
+
+        return $this;
+    }
+
+    /**
      * @param array|object $objects
      * @return FixtureGenerationContext
      */
@@ -78,6 +101,29 @@ class FixtureGenerationContext
             }
             $this->getPersistedObjectConstraints()->add($object);
         }
+
+        return $this;
+    }
+
+    /**
+     * @param int $maximum
+     * @return $this
+     */
+    public function setMaximumObjectsPerType($maximum)
+    {
+        $this->getPersistedObjectConstraints()->setMaximumObjectsPerType($maximum);
+
+        return $this;
+    }
+
+    /**
+     * @param object|string $class
+     * @param int $maximum
+     * @return $this
+     */
+    public function setMaximumObjectsForType($class, $maximum)
+    {
+        $this->getPersistedObjectConstraints()->setMaximumObjectsForType($class, $maximum);
 
         return $this;
     }

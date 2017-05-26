@@ -45,6 +45,10 @@ class ValueVisitor
      */
     private $recursionDepth;
     /**
+     * @var int
+     */
+    private $foundObjects;
+    /**
      * @var boolean
      */
     private $strictTypeChecking;
@@ -73,6 +77,8 @@ class ValueVisitor
         $this->persistedObjectCache = new PersistedObjectCache();
         $this->persistedObjectCache->setPersister($this->persister);
         $this->fixtureGenerationContext->getPersistedObjectConstraints()->setPersister($this->persister);
+        $this->recursionDepth = 0;
+        $this->foundObjects = 0;
     }
 
     public function getResults()
@@ -136,22 +142,28 @@ class ValueVisitor
 
             switch ($result) {
                 case PersistedObjectCache::OBJECT_NOT_FOUND:
-                    if ($this->recursionDepth <= $this->fixtureGenerationContext->getMaximumRecursion()) {
-                        $key       = $this->persistedObjectCache->add($object);
-                        $reference = $referencePrefix . $key;
+                    $maxObjects = $this->fixtureGenerationContext->getMaximumObjects();
+                    if (is_int($maxObjects) && $this->foundObjects >= $maxObjects) {
+                        break;
+                    }
+                    if ($this->recursionDepth > $this->fixtureGenerationContext->getMaximumRecursion()) {
+                        break;
+                    }
+                    $key       = $this->persistedObjectCache->add($object);
+                    $reference = $referencePrefix . $key;
 
-                        $objectAdded = $this->handlePersistedObject($object, $reference);
+                    $objectAdded = $this->handlePersistedObject($object, $reference);
 
-                        if ($objectAdded) {
-                            $valueContext->setValue('@' . $reference);
+                    if ($objectAdded) {
+                        $valueContext->setValue('@' . $reference);
 
-                            return;
-                        } else {
-                            $this->persistedObjectCache->skip($object);
-                            $valueContext->setSkipped(true);
+                        return;
+                    } else {
+                        $this->foundObjects--;
+                        $this->persistedObjectCache->skip($object);
+                        $valueContext->setSkipped(true);
 
-                            return;
-                        }
+                        return;
                     }
                     break;
                 case PersistedObjectCache::OBJECT_SKIPPED:
@@ -195,6 +207,7 @@ class ValueVisitor
 
         $saveValues = [];
         $this->recursionDepth++;
+        $this->foundObjects++;
 
         foreach ($classMetadata->propertyMetadata as $metadata) {
             $value        = $metadata->reflection->getValue($object);

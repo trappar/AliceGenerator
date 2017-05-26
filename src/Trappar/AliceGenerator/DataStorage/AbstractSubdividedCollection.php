@@ -23,12 +23,12 @@ abstract class AbstractSubdividedCollection
     }
 
     /**
-     * @param $object
+     * @param $object string|object
      * @return ArrayCollection
      */
     public function getStore($object)
     {
-        $subdivision = $this->determineSubdivision($object);
+        $subdivision = is_string($object) ? $object : $this->determineSubdivision($object);
 
         if (!isset($this->stores[$subdivision])) {
             $this->stores[$subdivision] = $this->getBackingStore();
