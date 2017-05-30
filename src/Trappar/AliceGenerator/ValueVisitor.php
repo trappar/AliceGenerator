@@ -243,4 +243,22 @@ class ValueVisitor
             return true;
         }
     }
+
+    /**
+     * @return FixtureGenerationContext
+     */
+    public function getFixtureGenerationContext()
+    {
+        return $this->fixtureGenerationContext;
+    }
+
+    /**
+     * @param FixtureGenerationContext $fixtureGenerationContext
+     * @return self
+     */
+    public function setFixtureGenerationContext(FixtureGenerationContext $fixtureGenerationContext)
+    {
+        $this->fixtureGenerationContext = $fixtureGenerationContext;
+        return $this;
+    }
 }

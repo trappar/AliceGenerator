@@ -16,7 +16,12 @@ class CollectionHandler implements ObjectHandlerInterface
             return false;
         }
 
-        $valueContext->setValue($collection->toArray());
+        $fixturesGenerationContext = $valueContext->getValueVisitor()->getFixtureGenerationContext();
+        if($fixturesGenerationContext->getSkipNotInitializedCollections() && !$collection->isInitialized()) {
+            $valueContext->setValue([]);
+        } else {
+            $valueContext->setValue($collection->toArray());
+        }
         $valueContext->getValueVisitor()->visitArray($valueContext);
 
         return true;
