@@ -9,6 +9,11 @@ class NamespaceNamer implements ReferenceNamerInterface
     protected $namespaceSeparator = '';
     protected $ignoredNamespaces = [];
 
+    public function createReference($object, $key)
+    {
+        return $this->createPrefix($object).$key;
+    }
+
     public function createPrefix($object)
     {
         $class = ClassUtils::getClass($object);
