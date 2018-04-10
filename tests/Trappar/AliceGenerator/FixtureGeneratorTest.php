@@ -9,6 +9,7 @@ use Trappar\AliceGenerator\FixtureGenerationContext;
 use Trappar\AliceGenerator\FixtureGeneratorBuilder;
 use Trappar\AliceGenerator\Persister\NonSpecificPersister;
 use Trappar\AliceGenerator\ReferenceNamer\NamespaceNamer;
+use Trappar\AliceGenerator\ReferenceNamer\PropertyReferenceNamer;
 use Trappar\AliceGenerator\Tests\Fixtures\ObjectWithConstructor;
 use Trappar\AliceGenerator\Tests\Fixtures\Post;
 use Trappar\AliceGenerator\Tests\Fixtures\SortTester;
@@ -133,6 +134,18 @@ class FixtureGeneratorTest extends TestCase
         );
 
         $this->assertArrayHasKey('TrapparAliceGeneratorTestsFixturesUser-1', $results[User::class]);
+    }
+
+    public function testUniqueReferenceNamer()
+    {
+        $user = $this->createTestData();
+
+        $results = FixtureUtils::getFixturesFromObjects(
+            $user,
+            FixtureGenerationContext::create()->setReferenceNamer(new PropertyReferenceNamer([User::class => 'username']))
+        );
+
+        $this->assertArrayHasKey('User-testUser', $results[User::class]);
     }
 
     public function testIgnoringEmptyEntity()

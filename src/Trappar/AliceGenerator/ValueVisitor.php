@@ -131,14 +131,14 @@ class ValueVisitor
                 return;
             }
 
-            $result          = $this->persistedObjectCache->find($object);
-            $referencePrefix = $this->fixtureGenerationContext->getReferenceNamer()->createPrefix($object);
+            $result         = $this->persistedObjectCache->find($object);
+            $referenceNamer = $this->fixtureGenerationContext->getReferenceNamer();
 
             switch ($result) {
                 case PersistedObjectCache::OBJECT_NOT_FOUND:
                     if ($this->recursionDepth <= $this->fixtureGenerationContext->getMaximumRecursion()) {
                         $key       = $this->persistedObjectCache->add($object);
-                        $reference = $referencePrefix . $key;
+                        $reference = $referenceNamer->createReference($object, $key);
 
                         $objectAdded = $this->handlePersistedObject($object, $reference);
 
@@ -159,7 +159,7 @@ class ValueVisitor
 
                     return;
                 default:
-                    $valueContext->setValue('@' . $referencePrefix . $result);
+                    $valueContext->setValue('@' . $referenceNamer->createReference($object, $result));
 
                     return;
             }
