@@ -181,7 +181,6 @@ class ValueVisitor
      * @param       $object
      * @param       $reference
      * @return bool if the object was added to the object cache
-     * @throws \Doctrine\ORM\Mapping\MappingException
      * @throws \Exception
      */
     private function handlePersistedObject($object, $reference)

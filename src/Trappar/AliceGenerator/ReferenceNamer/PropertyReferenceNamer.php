@@ -14,16 +14,17 @@ class PropertyReferenceNamer implements ReferenceNamerInterface
     /**
      * PropertyNames mappings
      *
-     * maps the className of an generated object to its unique property-value to be used
-     * @var Array
+     * Maps the className of an generated object to its unique property-value to be used
+     * @var array
      */
     protected $propertyNames;
 
     /**
      * PropertyReferenceNamer constructor.
-     * @param array $class => $propertyName
+     *
+     * @param array $propertyNames should be an array following the shape of [$class => $propertyName]
      */
-    public function __construct(Array $propertyNames)
+    public function __construct(array $propertyNames)
     {
         $this->propertyNames = $propertyNames;
     }

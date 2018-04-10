@@ -7,6 +7,7 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\ORM\Tools\Setup;
 use Nelmio\Alice\Fixtures\Loader;
+use Nelmio\Alice\Loader\NativeLoader;
 use Trappar\AliceGenerator\FixtureGenerationContext;
 use Trappar\AliceGenerator\FixtureGenerator;
 use Trappar\AliceGenerator\FixtureGeneratorBuilder;
@@ -44,6 +45,8 @@ class FixtureUtils
     /**
      * @param $entitiesDirs
      * @return EntityManager
+     * @throws \Doctrine\Common\Annotations\AnnotationException
+     * @throws \Doctrine\ORM\ORMException
      */
     public static function buildEntityManager($entitiesDirs)
     {
@@ -63,8 +66,8 @@ class FixtureUtils
 
     public static function getObjectsFromFixtures(array $data)
     {
-        $loader = new Loader();
-        return $loader->load($data);
+        $loader = new NativeLoader();
+        return $loader->loadData($data)->getObjects();
     }
 
     public static function getFixturesFromObjects($objects, FixtureGenerationContext $context = null)

@@ -84,10 +84,11 @@ Examples:
 
 `setReferenceNamer( ReferenceNamerInterface $referenceNamer )` - allows you to specify a custom class for handling reference names.
 
-There are two ReferenceNamer classes included in this library:
+There are three ReferenceNamer classes included in this library:
 
 * `Trappar\AliceGenerator\ReferenceNamer\ClassNamer` (default) - names references like '@User-1'.
 * `Trappar\AliceGenerator\ReferenceNamer\NamespaceNamer` - names references like '@Appbundle-Entity-Post-1'.
+* `Trappar\AliceGenerator\ReferenceNamer\PropertyReferenceNamer` - uses a mapping to name references like '@User-trappar' (where "trappar" is the user's username).
 
 Example:
 

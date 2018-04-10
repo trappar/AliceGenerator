@@ -12,14 +12,14 @@
     ],
     "require": {
         "php": "^5.6||^7.0",
-        "symfony/yaml": "^2.3||^3.0",
+        "symfony/yaml": "^2.3||^3.0|^4.0",
         "doctrine/common": "^2.6",
         "jms/metadata": "^1.5"
     },
     "require-dev": {
-        "doctrine/orm": "^2.5",
-        "phpunit/phpunit": "^5.5",
-        "nelmio/alice": "^2.2"
+        "doctrine/orm": "^2.6",
+        "phpunit/phpunit": "^7.1",
+        "nelmio/alice": "^3.3"
     },
     "autoload": {
         "psr-4": { "Trappar\\AliceGenerator\\": "src/Trappar/AliceGenerator" }
