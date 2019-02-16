@@ -5,9 +5,11 @@ namespace Trappar\AliceGenerator;
 use Metadata\MetadataFactoryInterface;
 use Trappar\AliceGenerator\DataStorage\PersistedObjectCache;
 use Trappar\AliceGenerator\DataStorage\ValueContext;
+use Trappar\AliceGenerator\Exception\InvalidPropertyNameException;
 use Trappar\AliceGenerator\Exception\UnknownObjectTypeException;
 use Trappar\AliceGenerator\Metadata\Resolver\MetadataResolverInterface;
 use Trappar\AliceGenerator\Persister\PersisterInterface;
+use Trappar\AliceGenerator\PropertyNamer\PropertyNamerInterface;
 
 class ValueVisitor
 {
@@ -31,6 +33,10 @@ class ValueVisitor
      * @var ObjectHandlerRegistryInterface
      */
     private $objectHandlerRegistry;
+    /**
+     * @var PropertyNamerInterface
+     */
+    private $propertyNamer;
 
     /**
      * @var FixtureGenerationContext
@@ -54,6 +60,7 @@ class ValueVisitor
         PersisterInterface $persister,
         MetadataResolverInterface $metadataResolver,
         ObjectHandlerRegistryInterface $objectHandlerRegistry,
+        PropertyNamerInterface $propertyNamer,
         $strictTypeChecking
     )
     {
@@ -61,6 +68,7 @@ class ValueVisitor
         $this->persister             = $persister;
         $this->metadataResolver      = $metadataResolver;
         $this->objectHandlerRegistry = $objectHandlerRegistry;
+        $this->propertyNamer         = $propertyNamer;
         $this->strictTypeChecking    = $strictTypeChecking;
     }
 
@@ -229,7 +237,12 @@ class ValueVisitor
                 continue;
             }
 
-            $saveValues[$valueContext->getPropName()] = $valueContext->getValue();
+            $propName = $this->propertyNamer->createName($valueContext);
+            if (!is_string($propName) || empty($propName)) {
+                throw new InvalidPropertyNameException('Property name must be a non empty string.');
+            }
+
+            $saveValues[$propName] = $valueContext->getValue();
         }
 
         $this->recursionDepth--;
