@@ -106,6 +106,7 @@ composer require trappar/alice-generator
 * [Configuration](doc/configuration.md)
   * [Constructing a FixtureGenerator](doc/configuration.md#constructing-a-fixturegenerator)
   * [Using with Doctrine](doc/configuration.md#using-with-doctrine)
+  * [Property Namer Strategy](doc/configuration.md#property-namer-strategy)
   * [Adding Custom Object Handlers](doc/configuration.md#adding-custom-object-handlers)
   * [Configuring Metadata Locations](doc/configuration.md#configuring-metadata-locations)
   * [Disabling Strict Type Checking](doc/configuration.md#disabling-strict-type-checking)
