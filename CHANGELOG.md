@@ -1,5 +1,8 @@
 # Changelog
 
+## Version 0.3.1
+* Add support for custom property namers.
+
 ## Version 0.3.0
 * BC Break: changed ReferenceNamer interface `getPrefix` into `getReference` to allow non-numeric keys in namers 
 * Add compatibility for newer versions of required libraries
