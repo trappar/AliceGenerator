@@ -38,6 +38,24 @@ The `DoctrinePersister` affects FixtureGeneration in a number of ways:
    * Handles Doctrine proxy objects
    * Forces the FixtureGenerator to only save Doctrine Entities (other objects can be handled in other ways)
 
+## Property Namer Strategy
+
+If you need to change the way that property names are set, you can use your own `PropertyNamerInterface`
+implementation.
+
+```php
+<?php
+use Trappar\AliceGenerator\FixtureGeneratorBuilder;
+ 
+$fixtureGenerator = FixtureGeneratorBuilder::create()
+    ->setPropertyNamer(new YourCustomPropertyNamer())
+    ->build();
+```
+
+The default strategy implementation will use the object's property name. `Trappar\AliceGenerator\PropertyNamer\PropertyNamer`
+ 
+*Side note: You can extend or decorate the default implementation.*
+
 ## Adding Custom Object Handlers
 
 See [Custom Object Handlers](custom-object-handlers.md)

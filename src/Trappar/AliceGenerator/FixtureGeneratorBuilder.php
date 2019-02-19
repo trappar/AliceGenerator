@@ -18,6 +18,8 @@ use Trappar\AliceGenerator\ObjectHandler\CollectionHandler;
 use Trappar\AliceGenerator\ObjectHandler\DateTimeHandler;
 use Trappar\AliceGenerator\Persister\NonSpecificPersister;
 use Trappar\AliceGenerator\Persister\PersisterInterface;
+use Trappar\AliceGenerator\PropertyNamer\PropertyNamer;
+use Trappar\AliceGenerator\PropertyNamer\PropertyNamerInterface;
 
 class FixtureGeneratorBuilder
 {
@@ -45,6 +47,10 @@ class FixtureGeneratorBuilder
      * @var ObjectHandlerRegistryInterface
      */
     private $objectHandlerRegistry;
+    /**
+     * @var PropertyNamerInterface
+     */
+    private $propertyNamer;
     /**
      * @var bool
      */
@@ -78,6 +84,7 @@ class FixtureGeneratorBuilder
                 ])
             )
             ->setObjectHandlerRegistry(new ObjectHandlerRegistry())
+            ->setPropertyNamer(new PropertyNamer())
             ->setYamlWriter(new YamlWriter(3, 4));
     }
 
@@ -177,6 +184,17 @@ class FixtureGeneratorBuilder
         return $this;
     }
 
+    /**
+     * @param PropertyNamerInterface $propertyNamer
+     * @return FixtureGeneratorBuilder
+     */
+    public function setPropertyNamer(PropertyNamerInterface $propertyNamer)
+    {
+        $this->propertyNamer = $propertyNamer;
+
+        return $this;
+    }
+
     public function addDefaultObjectHandlers()
     {
         $this->objectHandlersConfigured = true;
@@ -229,6 +247,7 @@ class FixtureGeneratorBuilder
                 $this->persister,
                 $this->metadataResolver,
                 $this->objectHandlerRegistry,
+                $this->propertyNamer,
                 $this->strictTypeChecking
             ),
             $this->yamlWriter
