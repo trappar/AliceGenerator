@@ -13,6 +13,10 @@ class FixtureGenerationContext
     /**
      * @var int
      */
+    private $skipNotInitializedCollections = false;
+    /**
+     * @var int
+     */
     private $maximumRecursion = 5;
     /**
      * @var PersistedObjectConstraints
@@ -141,6 +145,24 @@ class FixtureGenerationContext
     {
         $this->sortResults = $sortResults;
 
+        return $this;
+    }
+
+    /**
+     * @return int
+     */
+    public function getSkipNotInitializedCollections()
+    {
+        return $this->skipNotInitializedCollections;
+    }
+
+    /**
+     * @param int $skipNotInitializedCollections
+     * @return self
+     */
+    public function setSkipNotInitializedCollections($skipNotInitializedCollections)
+    {
+        $this->skipNotInitializedCollections = $skipNotInitializedCollections;
         return $this;
     }
 }
