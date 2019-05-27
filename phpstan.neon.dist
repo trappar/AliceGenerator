@@ -1,0 +1,5 @@
+parameters:
+  level: 0
+  paths:
+    - %currentWorkingDirectory%/src
+    - %currentWorkingDirectory%/tests

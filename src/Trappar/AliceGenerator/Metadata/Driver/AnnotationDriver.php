@@ -23,9 +23,9 @@ class AnnotationDriver implements DriverInterface
     /**
      * @param \ReflectionClass $class
      *
-     * @return \Metadata\ClassMetadata
+     * @return \Metadata\ClassMetadata|null
      */
-    public function loadMetadataForClass(\ReflectionClass $class)
+    public function loadMetadataForClass(\ReflectionClass $class): ?\Metadata\ClassMetadata
     {
         $classMetadata                  = new MergeableClassMetadata($name = $class->name);
         $classMetadata->fileResources[] = $class->getFileName();
