@@ -1,7 +1,6 @@
 language: php
 
 php:
-  - 7.1
   - 7.2
   - 7.3
   - nightly
@@ -9,11 +8,11 @@ php:
 matrix:
   fast_finish: true
   include:
-    - php: '7.1'
+    - php: '7.2'
       env: YAML_VERSION="^2.8"
-    - php: '7.1'
+    - php: '7.2'
       env: YAML_VERSION="^3.0"
-    - php: '7.1'
+    - php: '7.2'
       env: YAML_VERSION="^4.0"
   allow_failures:
     - php: nightly
