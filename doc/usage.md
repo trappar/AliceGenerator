@@ -32,14 +32,25 @@ Fixture Generation Contexts allow you to specify options which will affect a par
 ```php
 <?php
 use Trappar\AliceGenerator\FixtureGenerationContext;
+use Trappar\AliceGenerator\ObjectHandler\CollectionHandler;
+
+// this post will have 10 comments in fixtures
+CollectionHandler::limitCollection($post,"comments",10);
 
 // This will include only the Post
 $fixtureGenerator->generateYaml(
     $post,
     FixtureGenerationContext::create()
         ->setMaximumRecursion(2)
+        ->setMaximumCollectionChilds(5) // by default all collections would have 5 childs
+        ->setEntityCollectionLimit('AppBundle\Entity\Comment',3) // by default posts would have 3 comments
 );
 ```
+
+Collection limit check priorities 
+* CollectionHandler::limitCollection - you can limit some particular collection
+* ->setEntityCollectionLimit('AppBundle\Entity\Comment',3) - all Comment collections, which are not already limited with CollectionHandler::limitCollection
+* ->setMaximumCollectionChilds(5) - all not limited collections
 
 ### Limiting Recursion
 
