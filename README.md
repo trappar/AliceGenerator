@@ -56,7 +56,7 @@ Post:
         postedBy: '@User-1'
 User:
     User-1:
-        username: Jeff
+        username: Trappar
 ```
 
 ## Installation
